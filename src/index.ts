@@ -1,25 +1,25 @@
-const express = require('express');
-const mongoose = require('mongoose');
+import express from 'express';
+import cors from 'cors';
+import bodyParser from 'body-parser';
+import dotenv from 'dotenv';
+import routes from './routes';
+import connectDB from './db';
 
 const app = express();
+const conn = connectDB()
+console.log('conn', conn)
 
-mongoose.connect('mongodb://db:27017/petsitter', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-});
+dotenv.config(); // config env vars
 
-const db = mongoose.connection;
+// Express config.
+app.use(cors());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log('Connected to MongoDB');
-});
-
-app.get('/', (req, res) => {
-  res.send('Hello World!');
-});
+// Rotas
+app.use('/', routes);
 
 const port = 3000;
 app.listen(port, () => {
-  console.log(`App listening at http://localhost:${port}`);
+  console.log(`App listening at http://localhost:${port}!`);
 });

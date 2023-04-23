@@ -1,6 +1,47 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema({
+interface Pet {
+  id: string;
+  name: string;
+  specie: string;
+  breed: string;
+  age: number;
+  weight: number;
+  picture: string;
+}
+
+interface Album {
+  id: string;
+  filename: string;
+  date: Date;
+}
+
+interface Post {
+  id: string;
+  filename: string;
+  description: string;
+  date: Date;
+}
+
+export interface IUser {
+  username: string;
+  password: string;
+  name: string;
+  address: string;
+  city: string;
+  state: string;
+  country: string;
+  profilePicture: string;
+  pets: Pet[];
+  album: Album[];
+  posts: Post[];
+  isPetSitter: boolean;
+  createdAt: Date;
+  ratingsReceived: mongoose.Types.ObjectId[];
+  bookings: mongoose.Types.ObjectId[];
+}
+
+export const UserSchema = new mongoose.Schema<IUser>({
   username: String,
   password: String,
   name: String,
@@ -50,7 +91,3 @@ const UserSchema = new mongoose.Schema({
     }
   ]
 });
-
-const UserModel = mongoose.model('User', UserSchema);
-
-module.exports = UserModel;

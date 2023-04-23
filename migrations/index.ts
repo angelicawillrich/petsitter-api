@@ -1,9 +1,7 @@
-const mongoose = require('mongoose');
-const UserModel = require('./users');
-const RatingModel = require('./ratings');
-const BookingModel = require('./bookings');
+import mongoose from 'mongoose';
+import { UserModel, RatingModel, BookingModel } from "../src/models";
 
-mongoose.connect('mongodb://localhost:27017/petsitter', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/petsitter', {});
 
 const db = mongoose.connection;
 
@@ -84,13 +82,10 @@ db.once('open', async function() {
       }
     ],
     isPetSitter: true,
-    createdAt: new Date()
+    createdAt: new Date(),
+    bookings: [],
+    ratingsReceived: []
   });
-
-  await user1.save();
-  console.log('User created:', user1);
-  await user2.save();
-  console.log('User created:', user2);
 
   const rating1 = new RatingModel({
     reviewerId: user2._id,
@@ -107,11 +102,6 @@ db.once('open', async function() {
     description: 'Amazing pet sitter!',
     reviewedByPetSitter: true
   });
-
-  await rating1.save();
-  console.log('Rating created:', rating1);
-  await rating2.save();
-  console.log('Rating created:', rating2);
 
   const booking1 = new BookingModel(
     {
@@ -146,6 +136,22 @@ db.once('open', async function() {
         status: "confirmed"
     },
   );
+user1.ratingsReceived.push(rating1._id)
+
+  user2.ratingsReceived.push(rating2._id)
+  user1.bookings.push(booking1._id)
+  user1.bookings.push(booking2._id)
+  user1.bookings.push(booking3._id)
+
+  user1.save();
+  console.log('User created:', user1);
+  await user2.save();
+  console.log('User created:', user2);
+
+  await rating1.save();
+  console.log('Rating created:', rating1);
+  await rating2.save();
+  console.log('Rating created:', rating2);
   await booking1.save();
   console.log('Booking created:', booking1);
   await booking2.save();
