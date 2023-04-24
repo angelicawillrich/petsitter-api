@@ -16,7 +16,7 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-// Rotas
+// Routes
 app.use('/', routes);
 
 const port = 3000;

@@ -25,3 +25,31 @@ export async function getUserById(userId) {
       return {}
     }
   }
+
+  export async function getPetSitterById(petSitterId) {
+    try {
+        const user = await UserModel.findById(petSitterId)
+        .populate({
+          path: 'bookings',
+          populate: {
+            path: 'userId',
+            select: 'name address city state profilePicture'
+          }
+        })
+        .populate({
+          path: 'ratingsReceived',
+          populate: {
+            path: 'reviewerId',
+            select: 'name'
+          }
+        })
+        .exec()
+        console.log(user.isPetSitter)
+        if (!user.isPetSitter) return ({})
+    
+        return user
+      } catch (err) {
+        console.error('ERROR:', err)
+        return {}
+      }
+  }
