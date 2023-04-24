@@ -12,6 +12,7 @@ export async function getUserById(userId) {
       })
       .populate({
         path: 'ratingsReceived',
+        match: {reviewedByPetSitter: true},
         populate: {
           path: 'reviewerId',
           select: 'name'
@@ -38,6 +39,7 @@ export async function getUserById(userId) {
         })
         .populate({
           path: 'ratingsReceived',
+          match: {reviewedByPetSitter: false},
           populate: {
             path: 'reviewerId',
             select: 'name'
@@ -57,6 +59,27 @@ export async function getUserById(userId) {
   export async function login(username: String, password: String) {
     try {
         const result = await UserModel.find({ username: username, password: password}).exec();
+        return result
+    } catch (err) {
+        console.error('ERROR:', err)
+        return {}
+    }
+  }
+
+  export async function fetchPetSitters() {
+    try {
+        const result = await UserModel.find({ isPetSitter: true})
+        .limit(5)
+        .select('name address city')
+        .populate({
+            path: 'ratingsReceived',
+            match: {reviewedByPetSitter: false},
+            populate: {
+              path: 'reviewedId',
+              select: 'name'
+            }
+          })
+        .exec();
         return result
     } catch (err) {
         console.error('ERROR:', err)

@@ -43,3 +43,14 @@ export async function login (req: Request, res: Response) {
     res.json({})
   }
 }
+
+export async function fetchPetSitters (req: Request, res: Response) {
+  try {
+    const result = await user.fetchPetSitters()
+
+    res.json({result})
+  } catch (err) {
+    console.error('ERROR:', err)
+    res.json({})
+  }
+}
