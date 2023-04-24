@@ -53,3 +53,13 @@ export async function getUserById(userId) {
         return {}
       }
   }
+
+  export async function login(username: String, password: String) {
+    try {
+        const result = await UserModel.find({ username: username, password: password}).exec();
+        return result
+    } catch (err) {
+        console.error('ERROR:', err)
+        return {}
+    }
+  }

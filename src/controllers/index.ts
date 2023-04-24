@@ -1,1 +1,1 @@
-export {getUserById, getPetSitterById} from "./user"
+export {getUserById, getPetSitterById, login} from "./user"

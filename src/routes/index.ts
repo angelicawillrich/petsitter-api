@@ -1,11 +1,11 @@
 import { Router } from 'express';
-import { getUserById } from '../controllers';
-import { getPetSitterById } from '../controllers';
+import { getUserById, getPetSitterById, login } from '../controllers';
 
 const router = Router();
 
 // Routes
 router.get('/user/:id', getUserById);
 router.get('/petsitter/:id', getPetSitterById);
+router.get('/login', login);
 
 export default router;

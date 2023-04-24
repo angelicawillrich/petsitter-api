@@ -29,3 +29,17 @@ export async function getPetSitterById (req: Request, res: Response) {
     res.json({})
   }
 }
+
+export async function login (req: Request, res: Response) {
+  try {
+    const username = req.body.username
+    const password = req.body.password
+
+    const result = await user.login(username, password)
+
+    res.json({result})
+  } catch (err) {
+    console.error('ERROR:', err)
+    res.json({})
+  }
+}
