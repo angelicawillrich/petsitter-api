@@ -1,6 +1,19 @@
 import mongoose from "mongoose";
 
-interface Pet {
+interface IWeekDaysAndTime {
+  weekday: String;
+  initialTime: String;
+  finalTime: String
+}
+
+interface IAvailableDates {
+  id: String;
+  initialDate: Date;
+  finalDate: Date;
+  weekDaysAndTime: IWeekDaysAndTime[]
+}
+
+interface IPet {
   id: string;
   name: string;
   specie: string;
@@ -10,13 +23,13 @@ interface Pet {
   picture: string;
 }
 
-interface Album {
+interface IAlbum {
   id: string;
   filename: string;
   date: Date;
 }
 
-interface Post {
+interface IPost {
   id: string;
   filename: string;
   description: string;
@@ -32,10 +45,11 @@ export interface IUser {
   state: string;
   country: string;
   profilePicture: string;
-  pets: Pet[];
-  album: Album[];
-  posts: Post[];
+  pets: IPet[];
+  album: IAlbum[];
+  posts: IPost[];
   isPetSitter: boolean;
+  availableDates: IAvailableDates[]
   createdAt: Date;
   ratingsReceived: mongoose.Types.ObjectId[];
   bookings: mongoose.Types.ObjectId[];
@@ -77,6 +91,20 @@ export const UserSchema = new mongoose.Schema<IUser>({
     }
   ],
   isPetSitter: Boolean,
+  availableDates: [
+    {
+      id: String,
+      initialDate: Date,
+      finalDate: Date,
+      weekDaysAndTime: [
+        {
+          weekday: String,
+          initialTime: String,
+          finalTime: String
+        }
+      ]
+    }
+  ],
   createdAt: Date,
   ratingsReceived: [
     {

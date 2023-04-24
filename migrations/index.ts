@@ -44,6 +44,7 @@ db.once('open', async function() {
       }
     ],
     isPetSitter: true,
+    availableDates: [],
     createdAt: new Date()
   });
   const user2 = new UserModel({
@@ -82,6 +83,7 @@ db.once('open', async function() {
       }
     ],
     isPetSitter: true,
+    availableDates: [],
     createdAt: new Date(),
     bookings: [],
     ratingsReceived: []
