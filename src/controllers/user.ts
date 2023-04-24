@@ -36,8 +36,8 @@ export async function login (req: Request, res: Response) {
     const password = req.body.password
 
     const result = await user.login(username, password)
-
-    res.json({result})
+    if (!result.length) return res.json(false)
+    res.json(true)
   } catch (err) {
     console.error('ERROR:', err)
     res.json({})
