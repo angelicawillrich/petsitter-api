@@ -1,8 +1,8 @@
-import { Request, Response } from "express";
+import { NextFunction, Request, Response } from "express";
 import { user } from "../services";
 
 
-export async function getUserById(req: Request, res: Response) {
+export async function getUserById(req: Request, res: Response, next: NextFunction) {
   try {
     const userId = req.params.id
 
@@ -12,25 +12,23 @@ export async function getUserById(req: Request, res: Response) {
 
   } catch (err) {
     console.error('ERROR:', err)
-    res.json({})
+    next(err);
   }
 }
 
-export async function getPetSitterById (req: Request, res: Response) {
+export async function getPetSitterById (req: Request, res: Response, next: NextFunction) {
   try {
     const petSitterId = req.params.id
-    console.log({petSitterId})
 
     const result = await user.getPetSitterById(petSitterId)
-
     res.json({result})
   } catch (err) {
     console.error('ERROR:', err)
-    res.json({})
+    next(err);
   }
 }
 
-export async function login (req: Request, res: Response) {
+export async function login (req: Request, res: Response, next: NextFunction) {
   try {
     const username = req.body.username
     const password = req.body.password
@@ -40,17 +38,17 @@ export async function login (req: Request, res: Response) {
     res.json(true)
   } catch (err) {
     console.error('ERROR:', err)
-    res.json({})
+    next(err);
   }
 }
 
-export async function fetchPetSitters (req: Request, res: Response) {
+export async function fetchPetSitters (req: Request, res: Response, next: NextFunction) {
   try {
     const result = await user.fetchPetSitters()
 
     res.json({result})
   } catch (err) {
     console.error('ERROR:', err)
-    res.json({})
+    next(err);
   }
 }

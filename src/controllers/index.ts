@@ -1,1 +1,1 @@
-export {getUserById, getPetSitterById, login, fetchPetSitters} from "./user"
+export * as user from "./user.controller"
