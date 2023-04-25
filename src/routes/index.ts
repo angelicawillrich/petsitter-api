@@ -12,5 +12,6 @@ router.get('/petsitters', user.fetchPetSitters);
 router.post('/user/create', user.createUser)
 router.post('/user/personalInfo', user.updatePersonalInfo)
 router.post('/user/pets', user.updatePets)
+router.post('/user/petSitter', user.updatePetSitter)
 
 export default router;

@@ -1,5 +1,20 @@
 import mongoose from "mongoose";
 
+interface IAllowedPets {
+  petId: String
+}
+
+interface IServices  {
+  serviceId: String,
+  price: Number,
+  currency: String
+}
+interface IPetSitterInfo {
+  allowedPets: IAllowedPets[],
+  services: IServices[]
+  others: String
+}
+
 interface IWeekDaysAndTime {
   weekday: String;
   initialTime: String;
@@ -50,6 +65,7 @@ export interface IUser {
   album: IAlbum[];
   posts: IPost[];
   isPetSitter: boolean;
+  petSitterInfo: IPetSitterInfo;
   availableDates: IAvailableDates[]
   createdAt: Date;
   ratingsReceived: mongoose.Types.ObjectId[];
@@ -93,6 +109,21 @@ export const UserSchema = new mongoose.Schema<IUser>({
     }
   ],
   isPetSitter: Boolean,
+  petSitterInfo: {
+    allowedPets: [
+      {
+        petId: String
+      }
+    ],
+    services: [
+      {
+        serviceId: String,
+        price: Number,
+        currency: String
+      }
+    ],
+    others: String
+  },
   availableDates: [
     {
       id: String,
