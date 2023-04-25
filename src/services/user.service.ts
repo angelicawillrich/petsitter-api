@@ -1,6 +1,7 @@
+import { usernameAlreadyExistsError } from "../middlewares/errors";
 import { UserModel, RatingModel, BookingModel } from "../models";
 
-export async function getUserById(userId) {
+export async function getUserById(userId: string) {
     const user = await UserModel.findById(userId)
     .populate({
     path: 'bookings',
@@ -22,7 +23,7 @@ export async function getUserById(userId) {
     return user
   }
 
-  export async function getPetSitterById(petSitterId) {
+  export async function getPetSitterById(petSitterId: string) {
     const user = await UserModel.find({_id: petSitterId, isPetSitter: true })
     .populate({
         path: 'bookings',
@@ -62,5 +63,15 @@ export async function getUserById(userId) {
         }
         })
     .exec();
+    return result
+  }
+
+  export async function createUser(username: string, password: string) {
+    const usernameAlreadyExists = await UserModel.find({username: username }).exec();
+    if (usernameAlreadyExists.length > 0) {
+      throw usernameAlreadyExistsError;
+    }
+    const createdAt = new Date()
+    const result = await UserModel.create({ username: username, password: password, createdAt: createdAt});
     return result
   }

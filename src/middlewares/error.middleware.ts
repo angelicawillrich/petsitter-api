@@ -14,7 +14,7 @@ export default function errorHandler(
   switch (err.name) {
     case 'CastError':
       statusCode = 400;
-      message = 'Invalid ID';
+      message = 'ID inválido.';
       break;
     case 'ValidationError':
       statusCode = 400;
@@ -22,7 +22,11 @@ export default function errorHandler(
       break;
     case 'NotFoundError':
       statusCode = 404;
-      message = 'Not found';
+      message = 'Nao foi possível encontrar.';
+      break;
+    case 'UsernameAlreadyExistsError':
+      statusCode = 409;
+      message = err.message;
       break;
   }
 

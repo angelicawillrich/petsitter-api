@@ -52,3 +52,17 @@ export async function fetchPetSitters (req: Request, res: Response, next: NextFu
     next(err);
   }
 }
+
+export async function createUser (req: Request, res: Response, next: NextFunction) {
+  try {
+    const username = req.body.username
+    const password = req.body.password
+    
+    const result = await user.createUser(username, password)
+
+    res.json({result})
+  } catch (err) {
+    console.error('ERROR:', err)
+    next(err);
+  }
+}
