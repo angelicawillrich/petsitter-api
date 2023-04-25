@@ -81,7 +81,24 @@ export async function updatePersonalInfo (req: Request, res: Response, next: Nex
       profilePicture: req.body.profilePicture
     };
 
-    const result = await user.updatePersonalInfo(userId, update)
+    const result = await user.updateUser(userId, update)
+
+    res.json({result})
+  } catch (err) {
+    console.error('ERROR:', err)
+    next(err);
+  }
+}
+
+export async function updatePets (req: Request, res: Response, next: NextFunction) {
+  try {
+    const userId = req.body.userId;
+
+    const update = {
+      pets: req.body.pets
+    };
+
+    const result = await user.updateUser(userId, update)
 
     res.json({result})
   } catch (err) {

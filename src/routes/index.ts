@@ -10,7 +10,7 @@ router.get('/login', user.login);
 router.get('/petsitters', user.fetchPetSitters);
 
 router.post('/user/create', user.createUser)
-
 router.post('/user/personalInfo', user.updatePersonalInfo)
+router.post('/user/pets', user.updatePets)
 
 export default router;
