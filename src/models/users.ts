@@ -44,6 +44,7 @@ export interface IUser {
   city: string;
   state: string;
   country: string;
+  phone: string;
   profilePicture: string;
   pets: IPet[];
   album: IAlbum[];
@@ -63,6 +64,7 @@ export const UserSchema = new mongoose.Schema<IUser>({
   city: String,
   state: String,
   country: String,
+  phone: String,
   profilePicture: String,
   pets: [
     {

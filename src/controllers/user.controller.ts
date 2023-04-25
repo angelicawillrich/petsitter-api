@@ -57,8 +57,31 @@ export async function createUser (req: Request, res: Response, next: NextFunctio
   try {
     const username = req.body.username
     const password = req.body.password
-    
+
     const result = await user.createUser(username, password)
+
+    res.json({result})
+  } catch (err) {
+    console.error('ERROR:', err)
+    next(err);
+  }
+}
+
+export async function updatePersonalInfo (req: Request, res: Response, next: NextFunction) {
+  try {
+    const userId = req.body.userId;
+
+    const update = {
+      name: req.body.name,
+      addess: req.body.address,
+      city: req.body.city,
+      state: req.body.state,
+      country: req.body.country || "BR",
+      phone: req.body.phone,
+      profilePicture: req.body.profilePicture
+    };
+
+    const result = await user.updatePersonalInfo(userId, update)
 
     res.json({result})
   } catch (err) {

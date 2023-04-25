@@ -75,3 +75,14 @@ export async function getUserById(userId: string) {
     const result = await UserModel.create({ username: username, password: password, createdAt: createdAt});
     return result
   }
+
+  export async function updatePersonalInfo(userId, update) {
+    console.log('userId, update', userId, update)
+    const options = {
+      new: true, // to return the updated document
+    };
+
+    const result = await UserModel.findOneAndUpdate({_id: userId}, update, options);
+    return result
+
+  }
