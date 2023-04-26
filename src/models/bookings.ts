@@ -13,15 +13,17 @@ export interface IBooking extends Document {
 export const BookingSchema = new mongoose.Schema<IBooking>({
     petSitterId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
+      required: true
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
+      required: true
     },
-    initialDate: Date,
-    finalDate: Date,
-    initialTime: String,
-    finalTime: String,
-    status: String
+    initialDate: { type: Date, required: true },
+    finalDate: { type: Date, required: true },
+    initialTime: { type: String, required: true },
+    finalTime: { type: String, required: true },
+    status: { type: String, required: true }
   });
