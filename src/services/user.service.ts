@@ -77,7 +77,6 @@ export async function getUserById(userId: string) {
   }
 
   export async function updateUser(userId: string, update: any) {
-    console.log('userId, update', userId, update)
     const options = {
       new: true, // to return the updated document
     };
