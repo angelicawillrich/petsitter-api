@@ -1,3 +1,3 @@
-export * as user from './user.service'
-export * as booking from './booking.service'
-export * as rating from './rating.service'
+export * as userService from './user.service'
+export * as bookingService from './booking.service'
+export * as ratingService from './rating.service'

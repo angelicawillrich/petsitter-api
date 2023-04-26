@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
-import { user } from "../services";
+import { userService } from "../services";
 
 
 export async function getUserById(req: Request, res: Response, next: NextFunction) {
   try {
     const userId = req.params.id
 
-    const userResult = await user.getUserById(userId)
+    const userResult = await userService.getUserById(userId)
 
     res.json({userResult})
 
@@ -20,7 +20,7 @@ export async function getPetSitterById (req: Request, res: Response, next: NextF
   try {
     const petSitterId = req.params.id
 
-    const result = await user.getPetSitterById(petSitterId)
+    const result = await userService.getPetSitterById(petSitterId)
     res.json({result})
   } catch (err) {
     console.error('ERROR:', err)
@@ -33,7 +33,7 @@ export async function login (req: Request, res: Response, next: NextFunction) {
     const username = req.body.username
     const password = req.body.password
 
-    const result = await user.login(username, password)
+    const result = await userService.login(username, password)
     if (!result.length) return res.json(false)
     res.json(true)
   } catch (err) {
@@ -44,7 +44,7 @@ export async function login (req: Request, res: Response, next: NextFunction) {
 
 export async function fetchPetSitters (req: Request, res: Response, next: NextFunction) {
   try {
-    const result = await user.fetchPetSitters()
+    const result = await userService.fetchPetSitters()
 
     res.json({result})
   } catch (err) {
@@ -58,7 +58,7 @@ export async function createUser (req: Request, res: Response, next: NextFunctio
     const username = req.body.username
     const password = req.body.password
 
-    const result = await user.createUser(username, password)
+    const result = await userService.createUser(username, password)
 
     res.json({result})
   } catch (err) {
@@ -81,7 +81,7 @@ export async function updatePersonalInfo (req: Request, res: Response, next: Nex
       profilePicture: req.body.profilePicture
     };
 
-    const result = await user.updateUser(userId, update)
+    const result = await userService.updateUser(userId, update)
 
     res.json({result})
   } catch (err) {
@@ -98,7 +98,7 @@ export async function updatePets (req: Request, res: Response, next: NextFunctio
       pets: req.body.pets
     };
 
-    const result = await user.updateUser(userId, update)
+    const result = await userService.updateUser(userId, update)
 
     res.json({result})
   } catch (err) {
@@ -116,7 +116,7 @@ export async function updatePetSitter (req: Request, res: Response, next: NextFu
       isPetSitter: true
     };
 
-    const result = await user.updateUser(userId, update)
+    const result = await userService.updateUser(userId, update)
 
     res.json({result})
   } catch (err) {
@@ -133,7 +133,7 @@ export async function updatePetSitterAvailableDates (req: Request, res: Response
       availableDates: req.body.availableDates,
     };
 
-    const result = await user.updateUser(userId, update)
+    const result = await userService.updateUser(userId, update)
 
     res.json({result})
   } catch (err) {

@@ -1,3 +1,3 @@
-export * as user from "./user.controller"
-export * as booking from "./booking.controller"
-export * as rating from "./rating.controller"
+export * as userController from "./user.controller"
+export * as bookingController from "./booking.controller"
+export * as ratingController from "./rating.controller"
