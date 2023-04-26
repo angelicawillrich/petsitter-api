@@ -16,5 +16,6 @@ router.post('/user/petSitter', user.updatePetSitter)
 router.post('/user/petSitter/availableDates', user.updatePetSitterAvailableDates)
 
 router.post('/booking/create', booking.createBooking)
+router.post('/booking/update', booking.updateBookingStatus)
 
 export default router;
