@@ -124,3 +124,20 @@ export async function updatePetSitter (req: Request, res: Response, next: NextFu
     next(err);
   }
 }
+
+export async function updatePetSitterAvailableDates (req: Request, res: Response, next: NextFunction) {
+  try {
+    const userId = req.body.userId;
+
+    const update = {
+      availableDates: req.body.availableDates,
+    };
+
+    const result = await user.updateUser(userId, update)
+
+    res.json({result})
+  } catch (err) {
+    console.error('ERROR:', err)
+    next(err);
+  }
+}
