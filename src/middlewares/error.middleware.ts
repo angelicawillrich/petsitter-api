@@ -28,6 +28,9 @@ export default function errorHandler(
       statusCode = 409;
       message = err.message;
       break;
+    case 'TransactionFailed':
+      statusCode = 409;
+      message = err.message;
   }
 
   res.status(statusCode).json({ message });
