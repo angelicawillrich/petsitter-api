@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { booking, user } from '../controllers';
+import { booking, user, rating } from '../controllers';
 
 const router = Router();
 
@@ -17,5 +17,7 @@ router.post('/user/petSitter/availableDates', user.updatePetSitterAvailableDates
 
 router.post('/booking/create', booking.createBooking)
 router.post('/booking/update', booking.updateBookingStatus)
+
+router.post('/rating/create', rating.createRating)
 
 export default router;
