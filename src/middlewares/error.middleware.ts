@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import { CastError } from './errors/CastError';
-import { UsernameAlreadyExists } from './errors/UsernameAlreadyExists';
+import { EmailAlreadyExists } from './errors/EmailAlreadyExists';
 import { ValidationError } from './errors/ValidationError';
 import { NotFoundError } from './errors/NotFoundError';
 import { TransactionFailed } from './errors/TransactionFailed';
@@ -31,7 +31,7 @@ export default function errorHandler(
       statusCode = 404;
       message = err.message;
       break;
-    case UsernameAlreadyExists:
+    case EmailAlreadyExists:
       statusCode = 409;
       message = err.message;
       break;

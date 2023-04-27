@@ -1,7 +1,7 @@
-export class UsernameAlreadyExists extends Error {
+export class EmailAlreadyExists extends Error {
     constructor() {
         super()
-        this.name = 'UsernameAlreadyExists';
+        this.name = 'EmailAlreadyExists';
         this.message = 'O nome de usuário já existe, por favor, escolha outro nome de usuário.';
     }
 }

@@ -9,7 +9,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', async function() {
   // create user
   const user1 = new UserModel({
-    username: 'johndoe',
+    email: 'johndoe',
     password: 'password',
     name: 'John Doe',
     address: '123 Main St',
@@ -48,7 +48,7 @@ db.once('open', async function() {
     createdAt: new Date()
   });
   const user2 = new UserModel({
-    username: 'anabanana',
+    email: 'anabanana',
     password: 'password',
     name: 'Ana Banana',
     address: 'Winfriedstr. 000',

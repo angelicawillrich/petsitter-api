@@ -1,7 +1,7 @@
 import { UserNotFound } from "../middlewares/errors/UserNotFound";
 import { PetSitterNotFound } from "../middlewares/errors/PetSitterNotFound";
 import { WrongCredentials } from "../middlewares/errors/WrongCredentials";
-import { UsernameAlreadyExists } from "../middlewares/errors/UsernameAlreadyExists";
+import { EmailAlreadyExists } from "../middlewares/errors/EmailAlreadyExists";
 import { UserRepo } from "../repos";
 
 export async function getUserById(userId: string) {
@@ -24,14 +24,14 @@ export async function getUserById(userId: string) {
     return petSitter
   }
 
-  export async function login(username: string, password: string) {
-    const result = await UserRepo.login(username, password)
-    let correctUsernameAndPassword = true;
+  export async function login(email: string, password: string) {
+    const result = await UserRepo.login(email, password)
+    let correctEmailAndPassword = true;
     if (!result.length) {
-      correctUsernameAndPassword = false;
+      correctEmailAndPassword = false;
       throw new WrongCredentials();
     }
-    return correctUsernameAndPassword;
+    return correctEmailAndPassword;
   }
 
   export async function fetchPetSitters() {
@@ -39,13 +39,13 @@ export async function getUserById(userId: string) {
     return petSitters
   }
 
-  export async function createUser(username: string, password: string) {
-    const usernameAlreadyExists = await UserRepo.findUser(username)
-    if (usernameAlreadyExists.length > 0) {
-      throw new UsernameAlreadyExists();
+  export async function createUser(email: string, password: string) {
+    const emailAlreadyExists = await UserRepo.findUser(email)
+    if (emailAlreadyExists.length > 0) {
+      throw new EmailAlreadyExists();
     }
     const createdAt = new Date()
-    const result = await UserRepo.createUser(username, password, createdAt);
+    const result = await UserRepo.createUser(email, password, createdAt);
     return result
   }
 

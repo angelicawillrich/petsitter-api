@@ -2,7 +2,7 @@ import { UserModel } from "../models";
 
 export async function getUserById (userId: string) {
     const user = await UserModel.findById(userId)
-    .select('name username address city state country profilePicture pets album')
+    .select('name email address city state country profilePicture pets album')
     .populate({
     path: 'bookings',
     populate: {
@@ -21,14 +21,14 @@ export async function getUserById (userId: string) {
     return user;
 }
 
-export async function findUser (username: string) {
-    const result = await UserModel.find({username: username }).select('_id').exec();
+export async function findUser (email: string) {
+    const result = await UserModel.find({email: email }).select('_id').exec();
     return result;
 }
 
 export async function getPetSitterById (petSitterId: string) {
     const petSitter = await UserModel.find({_id: petSitterId, isPetSitter: true })
-    .select('name username address city state country profilePicture posts isPetSitter availableDates')
+    .select('name email address city state country profilePicture posts isPetSitter availableDates')
     .populate({
         path: 'bookings',
         populate: {
@@ -51,7 +51,7 @@ export async function getPetSitterById (petSitterId: string) {
 export async function fetchPetSitters () {
     const result = await UserModel.find({ isPetSitter: true})
     .limit(5)
-    .select('name address city username phone state')
+    .select('name address city email phone state')
     .populate({
         path: 'ratingsReceived',
         match: {reviewedByPetSitter: false},
@@ -64,13 +64,13 @@ export async function fetchPetSitters () {
     return result
 }
 
-export async function createUser (username: string, password: string, createdAt: Date) {
-    const result = await UserModel.create({ username: username, password: password, createdAt: createdAt});
+export async function createUser (email: string, password: string, createdAt: Date) {
+    const result = await UserModel.create({ email: email, password: password, createdAt: createdAt});
     return result
 }
 
-export async function login (username: string, password: string) {
-    const result = await UserModel.find({ username: username, password: password}).select('_id').exec();
+export async function login (email: string, password: string) {
+    const result = await UserModel.find({ email: email, password: password}).select('_id').exec();
     return result;
 }
 

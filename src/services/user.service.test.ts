@@ -3,7 +3,7 @@ import { UserRepo } from "../repos";
 import { UserNotFound } from "../middlewares/errors/UserNotFound";
 import { WrongCredentials } from '../middlewares/errors/WrongCredentials';
 import { PetSitterNotFound } from '../middlewares/errors/PetSitterNotFound';
-import { UsernameAlreadyExists } from '../middlewares/errors/UsernameAlreadyExists';
+import { EmailAlreadyExists } from '../middlewares/errors/EmailAlreadyExists';
 
 jest.mock('../models')
 
@@ -13,7 +13,7 @@ describe('user services', () => {
     const userId = '1';
     const mockResponse = {
         _id: '1',
-        username: 'a@a.com',
+        email: 'a@a.com',
         name: 'Angélica'
     };
 
@@ -39,7 +39,7 @@ describe('user services', () => {
     const petSitter = '1';
     const mockResponse = [{
         _id: '1',
-        username: 'a@a.com',
+        email: 'a@a.com',
         name: 'Angélica',
         isPetSitter: true
     }];
@@ -70,29 +70,29 @@ describe('user services', () => {
     await expect(userService.getPetSitterById(userId)).rejects.toThrow(PetSitterNotFound);
   });
 
-  it("should return TRUE when trying to log in with correct username and password", async () => {
+  it("should return TRUE when trying to log in with correct email and password", async () => {
 
-    const username = 'a@a.com';
+    const email = 'a@a.com';
     const password = '1234';
     const mockQueryResponse = ['1234'];
     const mockResponse = true;
 
     UserRepo.login = jest.fn().mockResolvedValue(mockQueryResponse);
 
-    const result = await userService.login(username, password);
+    const result = await userService.login(email, password);
 
     expect(result).toEqual(mockResponse);
   });
 
-  it("should throw an error when trying to log in with wrong username and password", async () => {
+  it("should throw an error when trying to log in with wrong email and password", async () => {
 
-    const username = 'a@a.com';
+    const email = 'a@a.com';
     const password = '12345';
     const mockResponse = [];
 
     UserRepo.login = jest.fn().mockResolvedValue(mockResponse);
 
-    await expect(userService.login(username, password)).rejects.toThrow(WrongCredentials);
+    await expect(userService.login(email, password)).rejects.toThrow(WrongCredentials);
   });
 
   it("should fetch a list of petSitters", async () => {
@@ -100,13 +100,13 @@ describe('user services', () => {
     const mockResponse = [
       {
         _id: '1',
-        username: 'a@a.com',
+        email: 'a@a.com',
         name: 'Angélica',
         isPetSitter: true
       },
       {
         _id: '2',
-        username: 'b@a.com',
+        email: 'b@a.com',
         name: 'Angel',
         isPetSitter: true
       }
@@ -120,12 +120,12 @@ describe('user services', () => {
   });
 
   it("should create a user", async () => {
-    const username = 'a@a.com';
+    const email = 'a@a.com';
     const password = '1234';
     const mockResponse = [
       {
         _id: '1',
-        username: 'a@a.com',
+        email: 'a@a.com',
         password: '1234',
       }
     ];
@@ -134,20 +134,20 @@ describe('user services', () => {
     UserRepo.createUser = jest.fn().mockResolvedValue(mockResponse);
     UserRepo.findUser = jest.fn().mockResolvedValue(mockFindUserResponse);
 
-    const result = await userService.createUser(username, password);
+    const result = await userService.createUser(email, password);
 
     expect(result).toEqual(mockResponse);
   });
 
-  it("should throw an error when trying to create a user with an already registered username", async () => {
+  it("should throw an error when trying to create a user with an already registered email", async () => {
 
-    const username = 'a@a.com';
+    const email = 'a@a.com';
     const password = '1234';
     const mockFindUserResponse = [{_id: '1234'}];
 
     UserRepo.findUser = jest.fn().mockResolvedValue(mockFindUserResponse);
 
-    await expect(userService.createUser(username, password)).rejects.toThrow(UsernameAlreadyExists);
+    await expect(userService.createUser(email, password)).rejects.toThrow(EmailAlreadyExists);
   });
 
   it("should update a user", async () => {
@@ -164,7 +164,7 @@ describe('user services', () => {
     const mockResponse = [
       {
         _id: '1',
-        username: 'angelicaw',
+        email: 'angelicaw',
         ratingsReceived: [],
         bookings: [],
         pets: [

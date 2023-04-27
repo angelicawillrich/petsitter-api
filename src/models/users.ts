@@ -52,7 +52,7 @@ interface IPost {
 }
 
 export interface IUser {
-  username: string;
+  email: string;
   password: string;
   name: string;
   address: string;
@@ -73,7 +73,7 @@ export interface IUser {
 }
 
 export const UserSchema = new mongoose.Schema<IUser>({
-  username: String,
+  email: String,
   password: String,
   name: String,
   address: String,
