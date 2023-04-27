@@ -22,7 +22,7 @@ export async function getUserById (userId: string) {
 }
 
 export async function findUser (username: string) {
-    const result = await UserModel.find({username: username }).exec();
+    const result = await UserModel.find({username: username }).select('_id').exec();
     return result;
 }
 
@@ -70,7 +70,7 @@ export async function createUser (username: string, password: string, createdAt:
 }
 
 export async function login (username: string, password: string) {
-    const result = await UserModel.find({ username: username, password: password}).exec();
+    const result = await UserModel.find({ username: username, password: password}).select('_id').exec();
     return result;
 }
 

@@ -1,4 +1,4 @@
-import { transactionFailedError } from "../middlewares/errors";
+import { TransactionFailed } from "../middlewares/errors/TransactionFailed";
 import { RatingRepo, UserRepo } from "../repos";
 
 export interface IRating {
@@ -20,6 +20,6 @@ export async function createRating(data: IRating) {
         return createRatingResult;
     } catch (error) {
         console.error('Error:', error)
-        throw transactionFailedError;
+        throw new TransactionFailed();
     }
 }

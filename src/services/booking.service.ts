@@ -1,4 +1,4 @@
-import { transactionFailedError } from "../middlewares/errors";
+import { TransactionFailed } from "../middlewares/errors/TransactionFailed";
 import { BookingRepo, UserRepo } from "../repos";
 
 export interface IBookingData {
@@ -29,7 +29,7 @@ export async function createBooking (data: IBookingData) {
         return createBookingResult;
     } catch (error) {
         console.error('Error:', error)
-        throw transactionFailedError;
+        throw new TransactionFailed();
     }
 }
 

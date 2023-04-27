@@ -32,10 +32,8 @@ export async function login (req: Request, res: Response, next: NextFunction) {
   try {
     const username = req.body.username
     const password = req.body.password
-
     const result = await userService.login(username, password)
-    if (!result.length) return res.json(false)
-    res.json(true)
+    res.json(result)
   } catch (err) {
     console.error('ERROR:', err)
     next(err);
