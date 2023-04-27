@@ -6,6 +6,7 @@ import { NotFoundError } from './errors/NotFoundError';
 import { TransactionFailed } from './errors/TransactionFailed';
 import { UserNotFound } from './errors/UserNotFound';
 import { MissingRequiredParams } from './errors/MissingRequiredParams';
+import { InvalidEmail } from './errors/InvalidEmail';
 
 export default function errorHandler(
   err: any,
@@ -42,6 +43,9 @@ export default function errorHandler(
       statusCode = 404;
       message = err.message;
     case MissingRequiredParams:
+      statusCode = 400;
+      message = err.message;
+    case InvalidEmail:
       statusCode = 400;
       message = err.message;
   }

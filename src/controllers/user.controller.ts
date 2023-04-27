@@ -1,7 +1,9 @@
 import { NextFunction, Request, Response } from "express";
 import { userService } from "../services";
 import { MissingRequiredParams } from "../middlewares/errors/MissingRequiredParams";
+import { InvalidEmail } from "../middlewares/errors/InvalidEmail";
 
+const regex = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.(?:[a-zA-Z]{2}|[a-zA-Z]{3})$/
 
 export async function getUserById(req: Request, res: Response, next: NextFunction) {
   try {
@@ -67,11 +69,17 @@ export async function fetchPetSitters (req: Request, res: Response, next: NextFu
 export async function createUser (req: Request, res: Response, next: NextFunction) {
   try {
     if (!req.body.email || !req.body.password) {
-      throw new MissingRequiredParams()
+      throw new MissingRequiredParams();
     }
 
     const email = req.body.email
     const password = req.body.password
+
+    // if email is not valid
+    if (!regex.test(email)) {
+      throw new InvalidEmail();
+    }
+
 
     const result = await userService.createUser(email, password)
 
