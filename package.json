@@ -7,8 +7,7 @@
   "scripts": {
     "start": "tsx dist/src/index.js",
     "start:dev": "tsx watch src/index.ts",
-    "build": "tsc",
-    "migration": "tsx dist/migrations/index.js",
+    "migration": "tsc && tsx dist/migrations/index.js",
     "test": "jest --coverage ./src"
   },
   "author": "",
@@ -20,6 +19,7 @@
     "mongoose": "^7.0.4"
   },
   "devDependencies": {
+    "@types/babel__traverse": "^7.18.5",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
     "@types/jest": "^29.5.1",
