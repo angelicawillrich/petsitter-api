@@ -31,6 +31,12 @@ export default function errorHandler(
     case 'TransactionFailed':
       statusCode = 409;
       message = err.message;
+    case 'UserNotFound':
+      statusCode = 404;
+      message = err.message;
+    case 'MissingRequiredParams':
+      statusCode: 400;
+      message = err.message;
   }
 
   res.status(statusCode).json({ message });

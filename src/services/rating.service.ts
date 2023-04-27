@@ -1,7 +1,7 @@
 import { transactionFailedError } from "../middlewares/errors";
-import { UserModel, RatingModel, BookingModel } from "../models";
+import { RatingRepo, UserRepo } from "../repos";
 
-interface IRating {
+export interface IRating {
     reviewerId: string;
     reviewedId: string;
     rating: number;
@@ -13,11 +13,9 @@ export async function createRating(data: IRating) {
     try {
         const reviewedId = data.reviewedId
 
-        const createRatingResult = await RatingModel.create(data);
-        await UserModel.findOneAndUpdate(
-            { _id: reviewedId }, 
-            { $push: { ratingsReceived: createRatingResult._id } },
-        );
+        const createRatingResult = await RatingRepo.createRating(data);
+        const ratingId = createRatingResult._id;
+        await UserRepo.updateReviewedIdUserRating(reviewedId, ratingId)
 
         return createRatingResult;
     } catch (error) {

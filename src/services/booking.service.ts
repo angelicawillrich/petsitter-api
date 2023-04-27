@@ -1,7 +1,7 @@
 import { transactionFailedError } from "../middlewares/errors";
-import { UserModel, RatingModel, BookingModel } from "../models";
+import { BookingRepo, UserRepo } from "../repos";
 
-interface IBookingData {
+export interface IBookingData {
     petSitterId: string;
     userId: string;
     initialDate: Date;
@@ -11,24 +11,20 @@ interface IBookingData {
     status: string;
 }
 
-interface IBookingStatus {
+export interface IBookingStatus {
     status: string;
 }
 
-export async function createBooking(data: IBookingData) {
+export async function createBooking (data: IBookingData) {
     try {
         const userId = data.userId
         const petSitterId = data.petSitterId
 
-        const createBookingResult = await BookingModel.create(data);
-        await UserModel.findOneAndUpdate(
-            { _id: petSitterId }, 
-            { $push: { bookings: createBookingResult._id } },
-        );
-        await UserModel.findOneAndUpdate(
-            { _id: userId }, 
-            { $push: { bookings: createBookingResult._id } },
-        );
+        const createBookingResult = await BookingRepo.createBooking(data)
+        const bookingId = createBookingResult._id;
+        
+        await UserRepo.updateUserBooking(userId, bookingId);
+        await UserRepo.updateUserBooking(petSitterId, bookingId);
 
         return createBookingResult;
     } catch (error) {
@@ -37,7 +33,7 @@ export async function createBooking(data: IBookingData) {
     }
 }
 
-export async function updateBookingStatus(bookingId: string, update: IBookingStatus) {
-    const updateBookingResult = await BookingModel.findOneAndUpdate({ _id: bookingId }, update);
+export async function updateBookingStatus (bookingId: string, update: IBookingStatus) {
+    const updateBookingResult = await BookingRepo.updateBookingStatus(bookingId, update);
     return updateBookingResult;
 }

@@ -1,87 +1,47 @@
-import { usernameAlreadyExistsError } from "../middlewares/errors";
-import { UserModel, RatingModel, BookingModel } from "../models";
+import { userNotFound, usernameAlreadyExistsError } from "../middlewares/errors";
+import { UserRepo } from "../repos";
 
 export async function getUserById(userId: string) {
-    const user = await UserModel.findById(userId)
-    .populate({
-    path: 'bookings',
-    populate: {
-        path: 'petSitterId',
-        select: 'name address city state profilePicture'
+    const user = await UserRepo.getUserById(userId);
+
+    if (!user) {
+      throw userNotFound;
     }
-    })
-    .populate({
-    path: 'ratingsReceived',
-    match: {reviewedByPetSitter: true},
-    populate: {
-        path: 'reviewerId',
-        select: 'name'
-    }
-    })
-    .exec()
 
     return user
   }
 
   export async function getPetSitterById(petSitterId: string) {
-    const user = await UserModel.find({_id: petSitterId, isPetSitter: true })
-    .populate({
-        path: 'bookings',
-        populate: {
-        path: 'userId',
-        select: 'name address city state profilePicture'
-        }
-    })
-    .populate({
-        path: 'ratingsReceived',
-        match: {reviewedByPetSitter: false},
-        populate: {
-        path: 'reviewerId',
-        select: 'name'
-        }
-    })
-    .exec()
+    const petSitter = await UserRepo.getPetSitterById(petSitterId)
 
-    return user
+    if (petSitter.length === 0) {
+      throw userNotFound;
+    }
+
+    return petSitter
   }
 
-  export async function login(username: String, password: String) {
-    const result = await UserModel.find({ username: username, password: password}).exec();
+  export async function login(username: string, password: string) {
+    const result = await UserRepo.login(username, password)
     return result
   }
 
   export async function fetchPetSitters() {
-    const result = await UserModel.find({ isPetSitter: true})
-    .limit(5)
-    .select('name address city')
-    .populate({
-        path: 'ratingsReceived',
-        match: {reviewedByPetSitter: false},
-        populate: {
-            path: 'reviewedId',
-            select: 'name'
-        }
-        })
-    .exec();
-    return result
+    const petSitters = await UserRepo.fetchPetSitters()
+    return petSitters
   }
 
   export async function createUser(username: string, password: string) {
-    const usernameAlreadyExists = await UserModel.find({username: username }).exec();
+    const usernameAlreadyExists = await UserRepo.findUser(username)
     if (usernameAlreadyExists.length > 0) {
       throw usernameAlreadyExistsError;
     }
     const createdAt = new Date()
-    const result = await UserModel.create({ username: username, password: password, createdAt: createdAt});
+    const result = await UserRepo.createUser(username, password, createdAt);
     return result
   }
 
   export async function updateUser(userId: string, update: any) {
-    const options = {
-      new: true, // to return the updated document
-    };
-
-    const result = await UserModel.findOneAndUpdate({_id: userId}, update, options);
+    const result = await UserRepo.updateUser(userId, update);
     return result
-
   }
