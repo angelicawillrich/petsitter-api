@@ -70,7 +70,24 @@ export async function createUser (email: string, password: string, createdAt: Da
 }
 
 export async function login (email: string, password: string) {
-    const result = await UserModel.find({ email: email, password: password}).select('_id').exec();
+    const result = await UserModel.find({ email: email, password: password})
+    .select('-password')
+    .populate({
+        path: 'bookings',
+        populate: {
+        path: 'petSitterId',
+        select: 'name address city state profilePicture'
+        }
+    })
+    .populate({
+        path: 'ratingsReceived',
+        match: {reviewedByPetSitter: true},
+        populate: {
+        path: 'reviewerId',
+        select: 'name'
+        }
+    })
+    .exec();
     return result;
 }
 

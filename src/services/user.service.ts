@@ -26,12 +26,10 @@ export async function getUserById(userId: string) {
 
   export async function login(email: string, password: string) {
     const result = await UserRepo.login(email, password)
-    let correctEmailAndPassword = true;
     if (!result.length) {
-      correctEmailAndPassword = false;
       throw new WrongCredentials();
     }
-    return correctEmailAndPassword;
+    return result;
   }
 
   export async function fetchPetSitters() {

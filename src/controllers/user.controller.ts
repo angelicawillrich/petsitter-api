@@ -54,7 +54,7 @@ export async function login (req: Request, res: Response, next: NextFunction) {
 
     if (result) {
       const sessionId = uuidv4();
-      const expiresAt = Date.now() + (1 * 60 * 1000) // 60 secs
+      const expiresAt = Date.now() + (30 * 60 * 1000)
       sessions[sessionId] = { user: email, expiresAt};
 
       res.set("Authorization", `Bearer ${sessionId}`);
