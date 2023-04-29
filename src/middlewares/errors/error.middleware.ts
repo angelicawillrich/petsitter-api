@@ -1,12 +1,14 @@
 import { Request, Response, NextFunction } from 'express';
-import { CastError } from './errors/CastError';
-import { EmailAlreadyExists } from './errors/EmailAlreadyExists';
-import { ValidationError } from './errors/ValidationError';
-import { NotFoundError } from './errors/NotFoundError';
-import { TransactionFailed } from './errors/TransactionFailed';
-import { UserNotFound } from './errors/UserNotFound';
-import { MissingRequiredParams } from './errors/MissingRequiredParams';
-import { InvalidEmail } from './errors/InvalidEmail';
+import { CastError } from './CastError';
+import { EmailAlreadyExists } from './EmailAlreadyExists';
+import { ValidationError } from './ValidationError';
+import { NotFoundError } from './NotFoundError';
+import { TransactionFailed } from './TransactionFailed';
+import { UserNotFound } from './UserNotFound';
+import { MissingRequiredParams } from './MissingRequiredParams';
+import { InvalidEmail } from './InvalidEmail';
+import { WrongCredentials } from './WrongCredentials';
+import { UserNotAuthenticated } from './UserNotAuthenticated';
 
 export default function errorHandler(
   err: any,
@@ -39,15 +41,27 @@ export default function errorHandler(
     case TransactionFailed:
       statusCode = 409;
       message = err.message;
+      break;
     case UserNotFound:
       statusCode = 404;
       message = err.message;
+      break;
     case MissingRequiredParams:
       statusCode = 400;
       message = err.message;
+      break;
     case InvalidEmail:
       statusCode = 400;
       message = err.message;
+      break;
+    case WrongCredentials:
+      statusCode = 401;
+      message = err.message;
+      break;
+    case UserNotAuthenticated:
+      statusCode = 401;
+      message = err.message;
+      break;
   }
 
   res.status(statusCode).json({ message });
