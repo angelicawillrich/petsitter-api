@@ -2,6 +2,9 @@ import { NextFunction, Request, Response } from "express";
 import { userService } from "../services";
 import { MissingRequiredParams } from "../middlewares/errors/MissingRequiredParams";
 import { InvalidEmail } from "../middlewares/errors/InvalidEmail";
+import { v4 as uuidv4 } from 'uuid';
+import { sessions } from "..";
+import { NotFoundError } from "../middlewares/errors/NotFoundError";
 
 const regex = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.(?:[a-zA-Z]{2}|[a-zA-Z]{3})$/
 
@@ -48,7 +51,34 @@ export async function login (req: Request, res: Response, next: NextFunction) {
     const email = req.body.email
     const password = req.body.password
     const result = await userService.login(email, password)
-    res.json(result)
+
+    if (result) {
+      const sessionId = uuidv4();
+      const expiresAt = Date.now() + (1 * 60 * 1000) // 60 secs
+      sessions[sessionId] = { user: email, expiresAt};
+
+      res.set("Authorization", `Bearer ${sessionId}`);
+      res.json(result)
+    }
+  } catch (err) {
+    console.error('ERROR:', err)
+    next(err);
+  }
+}
+
+export async function logout (req: Request, res: Response, next: NextFunction) {
+  try {  
+    if (!req.headers.authorization) {
+      throw new MissingRequiredParams();
+    }
+    const sessionId = req.headers.authorization?.replace('Bearer ', '');
+    if (!sessions[sessionId]) {
+      throw new NotFoundError();
+    }
+
+    delete sessions[sessionId];
+    res.json(true)
+
   } catch (err) {
     console.error('ERROR:', err)
     next(err);

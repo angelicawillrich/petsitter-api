@@ -4,10 +4,17 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import routes from './routes';
 import connectDB from './db';
-import errorHandler from './middlewares/error.middleware';
+import errorHandler from './middlewares/errors/error.middleware';
 
 const app = express();
-const conn = connectDB()
+connectDB();
+
+interface SessionData {
+  user: string,
+  expiresAt: number
+}
+
+export const sessions: {[token: string]: SessionData} = {};
 
 dotenv.config(); // config env vars
 
