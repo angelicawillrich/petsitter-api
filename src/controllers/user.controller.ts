@@ -134,14 +134,23 @@ export async function updatePersonalInfo (req: Request, res: Response, next: Nex
     if (!req.body.userId || !req.body.name || !req.body.address || !req.body.city || !req.body.state || !req.body.phone) {
       throw new MissingRequiredParams()
     }
-    const base64Image = req.body.profilePicture
-    const filename = uuidv4().split('-').join('')
-    const url = await saveBase64ImageToLocalFolder(base64Image, filename)
+    let url = null
+    if (req.body.profilePicture) {
+      if (req.body.profilePicture.split('/')[1] === "images") {
+        url = req.body.profilePicture
+      } else {
+        const base64Image = req.body.profilePicture
+        const filename = uuidv4().split('-').join('')
+        url = await saveBase64ImageToLocalFolder(base64Image, filename)
+      }
+    }
+    
     const userId = req.body.userId;
 
     const update = {
       name: req.body.name,
-      addess: req.body.address,
+      address: req.body.address,
+      district: req.body.district,
       city: req.body.city,
       state: req.body.state,
       country: req.body.country || "BR",
