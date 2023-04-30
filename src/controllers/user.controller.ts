@@ -5,6 +5,7 @@ import { InvalidEmail } from "../middlewares/errors/InvalidEmail";
 import { v4 as uuidv4 } from 'uuid';
 import { sessions } from "..";
 import { NotFoundError } from "../middlewares/errors/NotFoundError";
+import { saveBase64ImageToLocalFolder } from "../utils/utils";
 
 const regex = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.(?:[a-zA-Z]{2}|[a-zA-Z]{3})$/
 
@@ -54,7 +55,7 @@ export async function login (req: Request, res: Response, next: NextFunction) {
 
     if (loginResult) {
       const sessionId = uuidv4();
-      const expiresAt = Date.now() + (30 * 60 * 1000)
+      const expiresAt = Date.now() + (24 * 60 * 60 * 1000)
       sessions[sessionId] = { user: email, expiresAt};
 
       res.set("Authorization", `Bearer ${sessionId}`);
@@ -126,7 +127,9 @@ export async function updatePersonalInfo (req: Request, res: Response, next: Nex
     if (!req.body.userId || !req.body.name || !req.body.address || !req.body.city || !req.body.state || !req.body.phone) {
       throw new MissingRequiredParams()
     }
-
+    const base64Image = req.body.profilePicture
+    const filename = uuidv4().split('-').join('')
+    const url = await saveBase64ImageToLocalFolder(base64Image, filename)
     const userId = req.body.userId;
 
     const update = {
@@ -136,7 +139,7 @@ export async function updatePersonalInfo (req: Request, res: Response, next: Nex
       state: req.body.state,
       country: req.body.country || "BR",
       phone: req.body.phone,
-      profilePicture: req.body.profilePicture
+      profilePicture: url
     };
 
     const result = await userService.updateUser(userId, update)

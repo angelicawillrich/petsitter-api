@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import routes from './routes';
 import connectDB from './db';
+import * as path from 'path';
 import errorHandler from './middlewares/errors/error.middleware';
 
 const app = express();
@@ -21,7 +22,9 @@ dotenv.config(); // config env vars
 // Express config.
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: '50mb'}));
+const directory = path.join(process.cwd(), 'dist', 'images');
+app.use('/images', express.static(directory));
 
 // Routes
 app.use('/', routes);

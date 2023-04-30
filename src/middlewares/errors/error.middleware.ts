@@ -9,6 +9,7 @@ import { MissingRequiredParams } from './MissingRequiredParams';
 import { InvalidEmail } from './InvalidEmail';
 import { WrongCredentials } from './WrongCredentials';
 import { UserNotAuthenticated } from './UserNotAuthenticated';
+import { PayloadTooLargeError } from './PayloadTooLargeError';
 
 export default function errorHandler(
   err: any,
@@ -62,6 +63,9 @@ export default function errorHandler(
       statusCode = 401;
       message = err.message;
       break;
+    case PayloadTooLargeError:
+      statusCode = 413;
+      message = err.message;
   }
 
   res.status(statusCode).json({ message });
