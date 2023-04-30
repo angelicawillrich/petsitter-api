@@ -9,18 +9,25 @@ import { saveBase64ImageToLocalFolder } from "../utils/utils";
 
 const regex = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.(?:[a-zA-Z]{2}|[a-zA-Z]{3})$/
 
+export async function verifyToken(req: Request, res: Response, next: NextFunction) {
+  try {
+    const sessionId = req.headers.authorization?.replace('Bearer ', '');
+    const userId = sessions[sessionId].user
+    const user = await userService.getUserById(userId)
+    res.json({user})
+  } catch (err) {
+    next(err);
+  }
+}
+
 export async function getUserById(req: Request, res: Response, next: NextFunction) {
   try {
     if (!req.params.id) {
       throw new MissingRequiredParams()
     }
-
     const userId = req.params.id
-
     const userResult = await userService.getUserById(userId)
-
     res.json({userResult})
-
   } catch (err) {
     console.error('ERROR:', err)
     next(err);
@@ -56,7 +63,7 @@ export async function login (req: Request, res: Response, next: NextFunction) {
     if (loginResult) {
       const sessionId = uuidv4();
       const expiresAt = Date.now() + (24 * 60 * 60 * 1000)
-      sessions[sessionId] = { user: email, expiresAt};
+      sessions[sessionId] = { user: String(loginResult[0]._id), expiresAt};
 
       res.set("Authorization", `Bearer ${sessionId}`);
       const result = {user: loginResult, token: sessionId}

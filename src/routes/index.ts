@@ -9,6 +9,8 @@ router.get('/user/:id', sessionChecker, userController.getUserById);
 router.get('/petsitter/:id', sessionChecker, userController.getPetSitterById);
 router.get('/petsitters', sessionChecker, userController.fetchPetSitters);
 
+router.get('/verifyToken', sessionChecker, userController.verifyToken);
+
 router.post('/login', userController.login);
 router.post('/logout', userController.logout);
 

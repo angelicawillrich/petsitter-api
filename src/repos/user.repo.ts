@@ -2,7 +2,7 @@ import { UserModel } from "../models";
 
 export async function getUserById (userId: string) {
     const user = await UserModel.findById(userId)
-    .select('name email address city state country profilePicture pets album')
+    .select('-password')
     .populate({
     path: 'bookings',
     populate: {
