@@ -50,14 +50,15 @@ export async function login (req: Request, res: Response, next: NextFunction) {
 
     const email = req.body.email
     const password = req.body.password
-    const result = await userService.login(email, password)
+    const loginResult = await userService.login(email, password)
 
-    if (result) {
+    if (loginResult) {
       const sessionId = uuidv4();
       const expiresAt = Date.now() + (30 * 60 * 1000)
       sessions[sessionId] = { user: email, expiresAt};
 
       res.set("Authorization", `Bearer ${sessionId}`);
+      const result = {user: loginResult, token: sessionId}
       res.json(result)
     }
   } catch (err) {

@@ -12,7 +12,7 @@ router.get('/petsitters', sessionChecker, userController.fetchPetSitters);
 router.post('/login', userController.login);
 router.post('/logout', userController.logout);
 
-router.post('/user/create', sessionChecker, userController.createUser)
+router.post('/user/create', userController.createUser)
 router.post('/user/personalInfo', sessionChecker, userController.updatePersonalInfo)
 router.post('/user/pets', sessionChecker, userController.updatePets)
 router.post('/user/petSitter', sessionChecker, userController.updatePetSitter)
