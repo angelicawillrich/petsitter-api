@@ -129,7 +129,7 @@ export async function createUser (req: Request, res: Response, next: NextFunctio
   }
 }
 
-export async function updatePersonalInfo (req: Request, res: Response, next: NextFunction) {
+export async function updateProfile (req: Request, res: Response, next: NextFunction) {
   try {
     if (!req.body.userId || !req.body.name || !req.body.address || !req.body.city || !req.body.state || !req.body.phone) {
       throw new MissingRequiredParams()
@@ -139,9 +139,10 @@ export async function updatePersonalInfo (req: Request, res: Response, next: Nex
       if (req.body.profilePicture.split('/')[1] === "images") {
         url = req.body.profilePicture
       } else {
+        const userId = req.body.userId
         const base64Image = req.body.profilePicture
         const filename = uuidv4().split('-').join('')
-        url = await saveBase64ImageToLocalFolder(base64Image, filename)
+        url = await saveBase64ImageToLocalFolder(base64Image, filename, userId, 'profile')
       }
     }
     

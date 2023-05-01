@@ -15,7 +15,7 @@ router.post('/login', userController.login);
 router.post('/logout', userController.logout);
 
 router.post('/user/create', userController.createUser)
-router.post('/user/personalInfo', sessionChecker, userController.updatePersonalInfo)
+router.post('/user/profile', sessionChecker, userController.updateProfile)
 router.post('/user/pets', sessionChecker, userController.updatePets)
 router.post('/user/petSitter', sessionChecker, userController.updatePetSitter)
 router.post('/user/petSitter/availableDates', sessionChecker, userController.updatePetSitterAvailableDates)

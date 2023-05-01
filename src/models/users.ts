@@ -31,11 +31,13 @@ interface IAvailableDates {
 interface IPet {
   id: string;
   name: string;
+  yearBirth: string;
   specie: string;
   breed: string;
   age: number;
   weight: number;
   picture: string;
+  others: string;
 }
 
 interface IAlbum {
@@ -88,11 +90,13 @@ export const UserSchema = new mongoose.Schema<IUser>({
     {
       id: String,
       name: String,
+      yearBirth: Number,
       specie: String,
       breed: String,
       age: Number,
       weight: Number,
-      picture: String
+      picture: String,
+      others: String,
     }
   ],
   album: [
