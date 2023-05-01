@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { sessions } from "..";
 import { NotFoundError } from "../middlewares/errors/NotFoundError";
 import { saveBase64ImageToLocalFolder } from "../utils/utils";
+import { IPet } from "../models/users";
 
 const regex = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.(?:[a-zA-Z]{2}|[a-zA-Z]{3})$/
 
@@ -174,10 +175,25 @@ export async function updatePets (req: Request, res: Response, next: NextFunctio
   }
 
   try {
+    const updatedPets = await Promise.all(req.body.pets.map(async (pet: IPet): Promise<IPet> => {
+      let url = null
+      if (pet.picture) {
+        if (pet.picture.split('/')[1] === "images") {
+          url = pet.picture
+        } else {
+          const userId = req.body.userId
+          const base64Image = pet.picture
+          const filename = uuidv4().split('-').join('')
+          url = await saveBase64ImageToLocalFolder(base64Image, filename, userId, 'pets')
+        }
+      }
+      return {...pet, picture: url}
+    }))
+
     const userId = req.body.userId;
 
     const update = {
-      pets: req.body.pets
+      pets: updatedPets
     };
 
     const result = await userService.updateUser(userId, update)

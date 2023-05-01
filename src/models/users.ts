@@ -28,7 +28,7 @@ interface IAvailableDates {
   weekDaysAndTime: IWeekDaysAndTime[]
 }
 
-interface IPet {
+export interface IPet {
   id: string;
   name: string;
   yearBirth: string;
