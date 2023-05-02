@@ -69,7 +69,6 @@ db.once('open', async function() {
     ],
     album: [
       {
-        id: '1',
         filename: 'photo1.jpg',
         date: new Date()
       }

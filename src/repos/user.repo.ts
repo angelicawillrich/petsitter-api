@@ -100,7 +100,7 @@ export async function updateUserBooking(userId: string, bookingId: string) {
     await UserModel.findOneAndUpdate(
       { _id: userId }, 
       { $push: { bookings: bookingId } },
-  );
+    );
 }
 
 export async function updateReviewedIdUserRating(reviewedId: string, ratingId: string) {
@@ -108,4 +108,11 @@ export async function updateReviewedIdUserRating(reviewedId: string, ratingId: s
         { _id: reviewedId }, 
         { $push: { ratingsReceived: ratingId } },
     );
+}
+
+export async function addPhotoAlbum(userId: string, addData: any) {
+    await UserModel.findOneAndUpdate(
+        { _id: userId }, 
+        { $push: { album: addData } },
+      );
 }

@@ -205,6 +205,54 @@ export async function updatePets (req: Request, res: Response, next: NextFunctio
   }
 }
 
+export async function addPhotoAlbum (req: Request, res: Response, next: NextFunction) {
+  try {
+    if (!req.body.userId || !req.body.photo) {
+      throw new MissingRequiredParams()
+    }
+
+    const userId = req.body.userId
+    const base64Image = req.body.photo
+    const filename = uuidv4().split('-').join('')
+    const url = await saveBase64ImageToLocalFolder(base64Image, filename, userId, 'album')
+    
+    const addData = {
+      filename: url,
+      date: Date.now(),
+    };
+
+    const result = await userService.addPhotoAlbum(userId, addData)
+
+    res.json({result})
+
+  } catch (err) {
+    console.error('ERROR:', err)
+    next(err);
+  }
+}
+
+export async function deletePhotoAlbum (req: Request, res: Response, next: NextFunction) {
+  try {
+    if (!req.body.userId || !req.body.album) {
+      throw new MissingRequiredParams()
+    }
+
+    const userId = req.body.userId
+    
+    const update = {
+      album: req.body.album
+    }
+
+    const result = await userService.deletePhotoAlbum(userId, update)
+
+    res.json({result})
+
+  } catch (err) {
+    console.error('ERROR:', err)
+    next(err);
+  }
+}
+
 export async function updatePetSitter (req: Request, res: Response, next: NextFunction) {
   try {
     if (!req.body.userId || !req.body.petSitterInfo) {

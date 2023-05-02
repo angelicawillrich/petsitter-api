@@ -37,7 +37,6 @@ export interface IPet {
 }
 
 interface IAlbum {
-  id: string;
   filename: string;
   date: Date;
 }
@@ -97,7 +96,6 @@ export const UserSchema = new mongoose.Schema<IUser>({
   ],
   album: [
     {
-      id: String,
       filename: String,
       date: Date
     }

@@ -51,3 +51,13 @@ export async function getUserById(userId: string) {
     const result = await UserRepo.updateUser(userId, update);
     return result
   }
+
+  export async function addPhotoAlbum(userId: string, addData:any) {
+    const result = await UserRepo.addPhotoAlbum(userId, addData);
+    return result
+  }
+
+  export async function deletePhotoAlbum(userId: string, album: any) {
+    const result = await UserRepo.updateUser(userId, album);
+    return result
+  }
