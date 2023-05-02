@@ -12,15 +12,19 @@ export async function saveBase64ImageToLocalFolder(base64Image: string, filename
   const type = matches[1];
   const data = Buffer.from(matches[2], 'base64');
 
-  const directory = path.join(process.cwd(), 'dist', 'images', userId, folder);
+  const userDirectory = path.join(process.cwd(), 'dist', 'images', userId);
+  const internalDirectory = path.join(process.cwd(), 'dist', 'images', userId, folder);
 
-  if (!fs.existsSync(directory)) {
-    fs.mkdirSync(directory);
+  if (!fs.existsSync(userDirectory)) {
+    fs.mkdirSync(userDirectory);
+  }
+  if (!fs.existsSync(internalDirectory)) {
+    fs.mkdirSync(internalDirectory);
   }
   const url = `/images/${userId}/${folder}/${filename}.${type}`
 
   try {
-    await fs.promises.writeFile(`${directory}/${filename}.${type}`, data)
+    await fs.promises.writeFile(`${internalDirectory}/${filename}.${type}`, data)
     return url
   } catch (err) {
     console.error(err)
