@@ -1,16 +1,12 @@
 import mongoose from "mongoose";
 
-interface IAllowedPets {
-  petId: String
-}
-
 interface IServices  {
   serviceId: String,
-  price: Number,
+  price: String,
   currency: String
 }
 interface IPetSitterInfo {
-  allowedPets: IAllowedPets[],
+  allowedPets: String[],
   services: IServices[]
   others: String
 }
@@ -116,11 +112,7 @@ export const UserSchema = new mongoose.Schema<IUser>({
   ],
   isPetSitter: Boolean,
   petSitterInfo: {
-    allowedPets: [
-      {
-        petId: String
-      }
-    ],
+    allowedPets: [String],
     services: [
       {
         serviceId: String,
