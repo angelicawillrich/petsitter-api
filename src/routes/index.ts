@@ -8,6 +8,7 @@ const router = Router();
 router.get('/user/:id', sessionChecker, userController.getUserById);
 router.get('/petsitter/:id', sessionChecker, userController.getPetSitterById);
 router.get('/petsitters', sessionChecker, userController.fetchPetSitters);
+router.get('/petsitters/filter:filter', sessionChecker, userController.filterPetSitters);
 
 router.get('/verifyToken', sessionChecker, userController.verifyToken);
 

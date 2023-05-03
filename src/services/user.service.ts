@@ -61,3 +61,9 @@ export async function getUserById(userId: string) {
     const result = await UserRepo.updateUser(userId, album);
     return result
   }
+
+  export async function filterPetSitters(filter: any) {
+    const result = await UserRepo.filterPetSitters(filter);
+
+    return result
+  }

@@ -297,3 +297,15 @@ export async function updatePetSitterAvailableDates (req: Request, res: Response
     next(err);
   }
 }
+
+export async function filterPetSitters (req: Request, res: Response, next: NextFunction) {
+  try {
+    const filter = Object.fromEntries(new URLSearchParams(req.params.filter))
+    const result = await userService.filterPetSitters(filter)
+
+    res.json({result})
+  } catch (err) {
+    console.error('ERROR:', err)
+    next(err);
+  }
+}

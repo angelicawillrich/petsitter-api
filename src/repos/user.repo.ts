@@ -51,7 +51,7 @@ export async function getPetSitterById (petSitterId: string) {
 export async function fetchPetSitters () {
     const result = await UserModel.find({ isPetSitter: true})
     .limit(5)
-    .select('name address cityName email phone stateName profilePicture district')
+    .select('name address cityName email phone stateName profilePicture district petSitterInfo ratingsReceived')
     .populate({
         path: 'ratingsReceived',
         match: {reviewedByPetSitter: false},
@@ -115,4 +115,17 @@ export async function addPhotoAlbum(userId: string, addData: any) {
         { _id: userId }, 
         { $push: { album: addData } },
       );
+}
+
+export async function filterPetSitters (filter) {
+    const result = await UserModel.find(filter)
+    .select('name cityName stateName profilePicture district petSitterInfo ratingsReceived')
+    .populate({
+        path: 'ratingsReceived',
+        match: {reviewedByPetSitter: false},
+        select: 'rating'
+    })
+    .exec();
+
+    return result
 }
