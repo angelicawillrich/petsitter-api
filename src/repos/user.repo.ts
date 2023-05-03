@@ -7,7 +7,7 @@ export async function getUserById (userId: string) {
     path: 'bookings',
     populate: {
         path: 'petSitterId',
-        select: 'name address city state profilePicture'
+        select: 'name address cityName stateName profilePicture'
     }
     })
     .populate({
@@ -28,12 +28,12 @@ export async function findUser (email: string) {
 
 export async function getPetSitterById (petSitterId: string) {
     const petSitter = await UserModel.find({_id: petSitterId, isPetSitter: true })
-    .select('name email address city state country profilePicture posts isPetSitter availableDates')
+    .select('name email address cityName stateName country profilePicture posts isPetSitter availableDates')
     .populate({
         path: 'bookings',
         populate: {
         path: 'userId',
-        select: 'name address city state profilePicture'
+        select: 'name address cityName stateName profilePicture'
         }
     })
     .populate({
@@ -51,7 +51,7 @@ export async function getPetSitterById (petSitterId: string) {
 export async function fetchPetSitters () {
     const result = await UserModel.find({ isPetSitter: true})
     .limit(5)
-    .select('name address city email phone state')
+    .select('name address cityName email phone stateName profilePicture district')
     .populate({
         path: 'ratingsReceived',
         match: {reviewedByPetSitter: false},
@@ -76,7 +76,7 @@ export async function login (email: string, password: string) {
         path: 'bookings',
         populate: {
         path: 'petSitterId',
-        select: 'name address city state profilePicture'
+        select: 'name address cityName stateName profilePicture'
         }
     })
     .populate({

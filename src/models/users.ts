@@ -54,8 +54,10 @@ export interface IUser {
   name: string;
   address: string;
   district: string;
-  city: string;
-  state: string;
+  cityId: string;
+  cityName: string;
+  stateId: string;
+  stateName: string;
   country: string;
   phone: string;
   profilePicture: string;
@@ -76,8 +78,10 @@ export const UserSchema = new mongoose.Schema<IUser>({
   name: String,
   address: String,
   district: String,
-  city: String,
-  state: String,
+  cityId: String,
+  cityName: String,
+  stateId: String,
+  stateName: String,
   country: String,
   phone: String,
   profilePicture: String,

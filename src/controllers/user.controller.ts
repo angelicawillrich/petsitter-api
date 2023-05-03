@@ -132,7 +132,7 @@ export async function createUser (req: Request, res: Response, next: NextFunctio
 
 export async function updateProfile (req: Request, res: Response, next: NextFunction) {
   try {
-    if (!req.body.userId || !req.body.name || !req.body.address || !req.body.city || !req.body.state || !req.body.phone) {
+    if (!req.body.userId || !req.body.name || !req.body.address || !req.body.cityId || !req.body.cityName || !req.body.stateId || !req.body.stateName || !req.body.phone) {
       throw new MissingRequiredParams()
     }
     let url = null
@@ -153,8 +153,10 @@ export async function updateProfile (req: Request, res: Response, next: NextFunc
       name: req.body.name,
       address: req.body.address,
       district: req.body.district,
-      city: req.body.city,
-      state: req.body.state,
+      cityId: req.body.cityId,
+      cityName: req.body.cityName,
+      stateId: req.body.stateId,
+      stateName: req.body.stateName,
       country: req.body.country || "BR",
       phone: req.body.phone,
       profilePicture: url

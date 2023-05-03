@@ -13,8 +13,10 @@ db.once('open', async function() {
     password: 'password',
     name: 'John Doe',
     address: '123 Main St',
-    city: 'Anytown',
-    state: 'ST',
+    cityId: '1600212',
+    cityName: 'Anytown',
+    stateId: '16',
+    stateName: 'ST',
     country: 'US',
     profilePicture: 'https://example.com/profile.jpg',
     pets: [
@@ -52,8 +54,10 @@ db.once('open', async function() {
     password: 'password',
     name: 'Ana Banana',
     address: 'Winfriedstr. 000',
-    city: 'Munich',
-    state: 'By',
+    cityId: '1600253',
+    cityName: 'Munich',
+    stateId: '16',
+    stateName: 'By',
     country: 'GER',
     profilePicture: 'https://example.com/profile.jpg',
     pets: [
@@ -100,7 +104,7 @@ db.once('open', async function() {
     reviewerId: user1._id,
     reviewedId: user2._id,
     rating: 5,
-    description: 'Amazing pet sitter!',
+    description: 'A cliente é sempre pontual',
     reviewedByPetSitter: true
   });
 
@@ -140,7 +144,7 @@ db.once('open', async function() {
 user1.ratingsReceived.push(rating1._id)
 
   user2.ratingsReceived.push(rating2._id)
-  user1.bookings.push(booking1._id)
+  user2.bookings.push(booking1._id)
   user1.bookings.push(booking2._id)
   user1.bookings.push(booking3._id)
 
