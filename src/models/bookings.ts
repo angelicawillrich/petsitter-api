@@ -8,6 +8,7 @@ export interface IBooking extends Document {
   initialTime: string;
   finalTime: string;
   status: string;
+  service: string;
 }
 
 export const BookingSchema = new mongoose.Schema<IBooking>({
@@ -25,5 +26,6 @@ export const BookingSchema = new mongoose.Schema<IBooking>({
     finalDate: { type: Date, required: true },
     initialTime: { type: String, required: true },
     finalTime: { type: String, required: true },
-    status: { type: String, required: true }
+    status: { type: String, required: true },
+    service: { type: String, required: true }
   });

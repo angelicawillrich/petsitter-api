@@ -1,11 +1,19 @@
 import { NextFunction, Request, Response } from "express";
 import { bookingService } from "../services";
+import { MissingRequiredParams } from "../middlewares/errors/MissingRequiredParams";
+import { IBookingData } from "../services/booking.service";
 
 export async function createBooking (req: Request, res: Response, next: NextFunction) {
     try {
-      const data = req.body;
-  
-      const result = await bookingService.createBooking(data)
+      const data: IBookingData = req.body;
+
+      if (!data.petSitterId || !data.userId || !data.initialDate || !data.initialTime || !data.finalDate || !data.finalTime || !data.service) {
+        throw new MissingRequiredParams()
+      }
+
+      const updatedData = {...data, status: 'pending'}
+
+      const result = await bookingService.createBooking(updatedData)
   
       res.json({result})
     } catch (err) {

@@ -13,12 +13,13 @@ db.once('open', async function() {
     password: 'password',
     name: 'John Doe',
     address: '123 Main St',
+    district: 'centro',
     cityId: '1600212',
     cityName: 'Anytown',
     stateId: '16',
     stateName: 'ST',
+    phone: '(53)12345678',
     country: 'US',
-    profilePicture: 'https://example.com/profile.jpg',
     pets: [
       {
         id: '1',
@@ -46,7 +47,58 @@ db.once('open', async function() {
       }
     ],
     isPetSitter: true,
-    availableDates: [],
+    availableDates: [{
+      initialDate: new Date(),
+      finalDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+      weekDaysAndTime: [
+        {
+          weekday: 0,
+          initialTime: '11:00',
+          finalTime: '15:00'
+        },
+        {
+          weekday: 1,
+          initialTime: '9:00',
+          finalTime: '10:00'
+        },
+        {
+          weekday: 2,
+          initialTime: '9:00',
+          finalTime: '19:00'
+        },
+        {
+          weekday: 6,
+          initialTime: '10:00',
+          finalTime: '12:00'
+        }
+      ]
+    },
+    {
+      initialDate: new Date(),
+      finalDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+      weekDaysAndTime: [
+        {
+          weekday: 1,
+          initialTime: '11:00',
+          finalTime: '15:00'
+        },
+        {
+          weekday: 2,
+          initialTime: '9:00',
+          finalTime: '10:00'
+        },
+        {
+          weekday: 3,
+          initialTime: '9:00',
+          finalTime: '19:00'
+        },
+        {
+          weekday: 4,
+          initialTime: '10:00',
+          finalTime: '12:00'
+        }
+      ]
+    }],
     createdAt: new Date()
   });
   const user2 = new UserModel({
@@ -54,12 +106,13 @@ db.once('open', async function() {
     password: 'password',
     name: 'Ana Banana',
     address: 'Winfriedstr. 000',
+    district: 'centro',
     cityId: '1600253',
     cityName: 'Munich',
     stateId: '16',
     stateName: 'By',
+    phone: '(53)12345678',
     country: 'GER',
-    profilePicture: 'https://example.com/profile.jpg',
     pets: [
       {
         id: '1',
@@ -86,7 +139,58 @@ db.once('open', async function() {
       }
     ],
     isPetSitter: true,
-    availableDates: [],
+    availableDates: [{
+      initialDate: new Date(),
+      finalDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+      weekDaysAndTime: [
+        {
+          weekday: 0,
+          initialTime: '11:00',
+          finalTime: '15:00'
+        },
+        {
+          weekday: 1,
+          initialTime: '9:00',
+          finalTime: '10:00'
+        },
+        {
+          weekday: 2,
+          initialTime: '9:00',
+          finalTime: '19:00'
+        },
+        {
+          weekday: 6,
+          initialTime: '10:00',
+          finalTime: '12:00'
+        }
+      ]
+    },
+    {
+      initialDate: new Date(),
+      finalDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),
+      weekDaysAndTime: [
+        {
+          weekday: 1,
+          initialTime: '11:00',
+          finalTime: '15:00'
+        },
+        {
+          weekday: 2,
+          initialTime: '9:00',
+          finalTime: '10:00'
+        },
+        {
+          weekday: 3,
+          initialTime: '9:00',
+          finalTime: '19:00'
+        },
+        {
+          weekday: 4,
+          initialTime: '10:00',
+          finalTime: '12:00'
+        }
+      ]
+    }],
     createdAt: new Date(),
     bookings: [],
     ratingsReceived: []
@@ -97,7 +201,8 @@ db.once('open', async function() {
     reviewedId: user1._id,
     rating: 4,
     description: 'Great service!',
-    reviewedByPetSitter: false
+    reviewedByPetSitter: false,
+    createdAt: new Date()
   });
   
   const rating2 = new RatingModel({
@@ -105,7 +210,8 @@ db.once('open', async function() {
     reviewedId: user2._id,
     rating: 5,
     description: 'A cliente é sempre pontual',
-    reviewedByPetSitter: true
+    reviewedByPetSitter: true,
+    createdAt: new Date()
   });
 
   const booking1 = new BookingModel(
@@ -116,7 +222,8 @@ db.once('open', async function() {
         finalDate: "2023-06-10",
         initialTime: "08:00",
         finalTime: "17:00",
-        status: "confirmed"
+        status: "confirmed",
+        service: "1"
     },
   );
   const booking2 = new BookingModel(
@@ -127,7 +234,8 @@ db.once('open', async function() {
         finalDate: "2022-03-10",
         initialTime: "08:00",
         finalTime: "17:00",
-        status: "rejected"
+        status: "rejected",
+        service: "1"
     },
   );
   const booking3 = new BookingModel(

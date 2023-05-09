@@ -8,7 +8,8 @@ export interface IBookingData {
     finalDate: Date;
     initialTime: string;
     finalTime: string;
-    status: string;
+    service: string;
+    status?: string;
 }
 
 export interface IBookingStatus {
