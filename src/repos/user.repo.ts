@@ -4,19 +4,31 @@ export async function getUserById (userId: string) {
     const user = await UserModel.findById(userId)
     .select('-password')
     .populate({
-    path: 'bookings',
-    populate: {
-        path: 'petSitterId',
-        select: 'name address cityName stateName profilePicture'
-    }
-    })
-    .populate({
-    path: 'ratingsReceived',
-    match: {reviewedByPetSitter: true},
-    populate: {
-        path: 'reviewerId',
-        select: 'name'
-    }
+        path: 'bookings',
+        options: { sort: ({initialDate: 'asc'})},
+        match: {
+            status: {
+                $in: [
+                  "pending",
+                  "confirmed"
+                ]
+              },
+            finalDate: {
+                $gt: new Date()
+            }
+        },
+        populate: {
+            path: 'petSitterId',
+            select: 'name address cityName stateName profilePicture'
+        }
+        })
+        .populate({
+            path: 'ratingsReceived',
+            match: {reviewedByPetSitter: true},
+            populate: {
+                path: 'reviewerId',
+                select: 'name'
+            }
     })
     return user;
 }
@@ -33,7 +45,19 @@ export async function getPetSitterById (petSitterId: string) {
         path: 'bookings',
         populate: {
         path: 'userId',
-        select: 'name address cityName stateName profilePicture'
+        select: 'name address cityName stateName profilePicture',
+        options: { sort: ({initialDate: 'asc'})},
+        match: {
+            status: {
+                $in: [
+                  "pending",
+                  "confirmed"
+                ]
+              },
+            finalDate: {
+                $gt: new Date()
+            }
+        },
         }
     })
     .populate({
