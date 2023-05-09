@@ -28,7 +28,7 @@ export async function findUser (email: string) {
 
 export async function getPetSitterById (petSitterId: string) {
     const petSitter = await UserModel.find({_id: petSitterId, isPetSitter: true })
-    .select('name email address cityName stateName country profilePicture posts isPetSitter availableDates')
+    .select('name email phone address district cityName stateName country profilePicture posts isPetSitter availableDates petSitterInfo')
     .populate({
         path: 'bookings',
         populate: {
