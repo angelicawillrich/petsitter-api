@@ -255,6 +255,55 @@ export async function deletePhotoAlbum (req: Request, res: Response, next: NextF
   }
 }
 
+export async function createPost (req: Request, res: Response, next: NextFunction) {
+  try {
+    if (!req.body.petSitterId || !req.body.filename) {
+      throw new MissingRequiredParams()
+    }
+
+    const petSitterId = req.body.petSitterId
+    const base64Image = req.body.filename
+    const filename = uuidv4().split('-').join('')
+    const url = await saveBase64ImageToLocalFolder(base64Image, filename, petSitterId, 'posts')
+    
+    const addData = {
+      filename: url,
+      description: req.body.description,
+      date: Date.now(),
+    };
+
+    const result = await userService.createPost(petSitterId, addData)
+
+    res.json({result})
+
+  } catch (err) {
+    console.error('ERROR:', err)
+    next(err);
+  }
+}
+
+export async function deletePost (req: Request, res: Response, next: NextFunction) {
+  try {
+    if (!req.body.petSitterId || !req.body.posts) {
+      throw new MissingRequiredParams()
+    }
+
+    const petSitterId = req.body.petSitterId
+    
+    const update = {
+      posts: req.body.posts
+    }
+
+    const result = await userService.deletePost(petSitterId, update)
+
+    res.json({result})
+
+  } catch (err) {
+    console.error('ERROR:', err)
+    next(err);
+  }
+}
+
 export async function updatePetSitter (req: Request, res: Response, next: NextFunction) {
   try {
     if (!req.body.userId || !req.body.petSitterInfo) {

@@ -62,6 +62,16 @@ export async function getUserById(userId: string) {
     return result
   }
 
+  export async function createPost(userId: string, addData:any) {
+    const result = await UserRepo.createPost(userId, addData);
+    return result
+  }
+
+  export async function deletePost(userId: string, post: any) {
+    const result = await UserRepo.updateUser(userId, post);
+    return result
+  }
+
   export async function filterPetSitters(filter: any) {
     const result = await UserRepo.filterPetSitters(filter);
 

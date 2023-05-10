@@ -20,6 +20,8 @@ router.post('/user/profile', sessionChecker, userController.updateProfile)
 router.post('/user/pets', sessionChecker, userController.updatePets)
 router.post('/user/addPhotoAlbum', sessionChecker, userController.addPhotoAlbum)
 router.post('/user/deletePhotoAlbum', sessionChecker, userController.deletePhotoAlbum)
+router.post('/user/createPost', sessionChecker, userController.createPost)
+router.post('/user/deletePost', sessionChecker, userController.deletePost)
 
 router.post('/petSitter', sessionChecker, userController.updatePetSitter)
 router.post('/petSitter/availableDates', sessionChecker, userController.updatePetSitterAvailableDates)

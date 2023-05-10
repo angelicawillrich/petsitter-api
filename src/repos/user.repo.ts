@@ -21,14 +21,14 @@ export async function getUserById (userId: string) {
             path: 'petSitterId',
             select: 'name address cityName stateName profilePicture'
         }
-        })
-        .populate({
-            path: 'ratingsReceived',
-            match: {reviewedByPetSitter: true},
-            populate: {
-                path: 'reviewerId',
-                select: 'name'
-            }
+    })
+    .populate({
+        path: 'ratingsReceived',
+        match: {reviewedByPetSitter: true},
+        populate: {
+            path: 'reviewerId',
+            select: 'name'
+        }
     })
     return user;
 }
@@ -44,8 +44,9 @@ export async function getPetSitterById (petSitterId: string) {
     .populate({
         path: 'bookings',
         populate: {
-        path: 'userId',
-        select: 'name address cityName stateName profilePicture',
+            path: 'userId',
+            select: 'name address cityName stateName profilePicture',
+        },
         options: { sort: ({initialDate: 'asc'})},
         match: {
             status: {
@@ -58,14 +59,13 @@ export async function getPetSitterById (petSitterId: string) {
                 $gt: new Date()
             }
         },
-        }
     })
     .populate({
         path: 'ratingsReceived',
         match: {reviewedByPetSitter: false},
         populate: {
-        path: 'reviewerId',
-        select: 'name'
+            path: 'reviewerId',
+            select: 'name'
         }
     })
     .exec()
@@ -75,7 +75,7 @@ export async function getPetSitterById (petSitterId: string) {
 export async function fetchPetSitters () {
     const result = await UserModel.find({ isPetSitter: true})
     .limit(5)
-    .select('name address cityName email phone stateName profilePicture district petSitterInfo ratingsReceived')
+    .select('_id name address cityName email phone stateName profilePicture district petSitterInfo ratingsReceived')
     .populate({
         path: 'ratingsReceived',
         match: {reviewedByPetSitter: false},
@@ -138,6 +138,13 @@ export async function addPhotoAlbum(userId: string, addData: any) {
     await UserModel.findOneAndUpdate(
         { _id: userId }, 
         { $push: { album: addData } },
+      );
+}
+
+export async function createPost(userId: string, addData: any) {
+    await UserModel.findOneAndUpdate(
+        { _id: userId }, 
+        { $push: { posts: addData } },
       );
 }
 
