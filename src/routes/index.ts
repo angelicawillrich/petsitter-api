@@ -15,20 +15,20 @@ router.get('/verifyToken', sessionChecker, userController.verifyToken);
 router.post('/login', userController.login);
 router.post('/logout', userController.logout);
 
-router.post('/user/create', userController.createUser)
-router.post('/user/profile', sessionChecker, userController.updateProfile)
-router.post('/user/pets', sessionChecker, userController.updatePets)
-router.post('/user/addPhotoAlbum', sessionChecker, userController.addPhotoAlbum)
-router.post('/user/deletePhotoAlbum', sessionChecker, userController.deletePhotoAlbum)
-router.post('/user/createPost', sessionChecker, userController.createPost)
-router.post('/user/deletePost', sessionChecker, userController.deletePost)
+router.post('/user', userController.createUser)
+router.patch('/user/profile', sessionChecker, userController.updateProfile)
+router.patch('/user/pets', sessionChecker, userController.updatePets)
+router.patch('/user/addPhotoAlbum', sessionChecker, userController.addPhotoAlbum)
+router.patch('/user/deletePhotoAlbum', sessionChecker, userController.deletePhotoAlbum)
+router.patch('/user/createPost', sessionChecker, userController.createPost)
+router.patch('/user/deletePost', sessionChecker, userController.deletePost)
 
-router.post('/petSitter', sessionChecker, userController.updatePetSitter)
-router.post('/petSitter/availableDates', sessionChecker, userController.updatePetSitterAvailableDates)
+router.patch('/user/petSitter', sessionChecker, userController.updatePetSitter)
+router.patch('/user/petSitter/availableDates', sessionChecker, userController.updatePetSitterAvailableDates)
 
-router.post('/booking/create', sessionChecker, bookingController.createBooking)
-router.post('/booking/update', sessionChecker, bookingController.updateBookingStatus)
+router.post('/booking', sessionChecker, bookingController.createBooking)
+router.patch('/booking', sessionChecker, bookingController.updateBookingStatus)
 
-router.post('/rating/create', sessionChecker, ratingController.createRating)
+router.post('/rating', sessionChecker, ratingController.createRating)
 
 export default router;

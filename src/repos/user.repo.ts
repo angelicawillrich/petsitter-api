@@ -10,7 +10,7 @@ export async function getUserById (userId: string) {
             status: {
                 $in: [
                   "pending",
-                  "confirmed"
+                  "approved"
                 ]
               },
             finalDate: {
@@ -49,12 +49,13 @@ export async function getPetSitterById (petSitterId: string) {
         },
         options: { sort: ({initialDate: 'asc'})},
         match: {
+            petSitterId: {$eq: petSitterId},
             status: {
                 $in: [
                   "pending",
-                  "confirmed"
+                  "approved"
                 ]
-              },
+            },
             finalDate: {
                 $gt: new Date()
             }

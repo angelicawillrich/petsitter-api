@@ -47,7 +47,7 @@ describe('booking services', () => {
   });
 
   it("should update a booking status", async () => {
-    const data = { "status": "cancelled" };
+    const data = { "status": "canceled" };
     const bookingId = "1"
     const mockResponse = {
         _id: '1',

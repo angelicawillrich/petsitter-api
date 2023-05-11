@@ -222,7 +222,7 @@ db.once('open', async function() {
         finalDate: "2023-06-10",
         initialTime: "08:00",
         finalTime: "17:00",
-        status: "confirmed",
+        status: "approved",
         service: "1"
     },
   );
@@ -246,7 +246,7 @@ db.once('open', async function() {
         finalDate: "2023-05-10",
         initialTime: "08:00",
         finalTime: "17:00",
-        status: "confirmed"
+        status: "approved"
     },
   );
 user1.ratingsReceived.push(rating1._id)
