@@ -77,3 +77,20 @@ export async function getUserById(userId: string) {
 
     return result
   }
+
+  export async function createAvailableDate(userId: string, availableDate: any) {
+    const result = await UserRepo.createAvailableDate(userId, availableDate);
+
+    return result
+  }
+
+  export async function updateAvailableDate(userId: string, availableDateId: string, availableDate: any) {
+    const result = await UserRepo.updateAvailableDate(userId, availableDateId, availableDate);
+
+    return result
+  }
+
+  export async function deleteAvailableDate(userId: string, availableDateId: any) {
+    const result = await UserRepo.deleteAvailableDates(userId, availableDateId);
+    return result
+  }

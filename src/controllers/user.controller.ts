@@ -326,19 +326,54 @@ export async function updatePetSitter (req: Request, res: Response, next: NextFu
   }
 }
 
-export async function updatePetSitterAvailableDates (req: Request, res: Response, next: NextFunction) {
+export async function createAvailableDate (req: Request, res: Response, next: NextFunction) {
   try {
-    if (!req.body.userId || !req.body.availableDates) {
+    if (!req.body.userId|| !req.body.availableDate) {
       throw new MissingRequiredParams()
     }
     
     const userId = req.body.userId;
+    const availableDate = req.body.availableDate
 
-    const update = {
-      availableDates: req.body.availableDates,
-    };
+    const result = await userService.createAvailableDate(userId, availableDate)
 
-    const result = await userService.updateUser(userId, update)
+    res.json({result})
+  } catch (err) {
+    console.error('ERROR:', err)
+    next(err);
+  }
+}
+
+export async function updateAvailableDate (req: Request, res: Response, next: NextFunction) {
+  try {
+    if (!req.body.userId || !req.body.availableDateId || !req.body.availableDate) {
+      throw new MissingRequiredParams()
+    }
+    
+    const userId = req.body.userId;
+    const availableDateId = req.body.availableDateId;
+    const availableDate = req.body.availableDate
+
+    const result = await userService.updateAvailableDate(userId, availableDateId, availableDate)
+
+    res.json({result})
+  } catch (err) {
+    console.error('ERROR:', err)
+    next(err);
+  }
+}
+
+export async function deleteAvailableDate (req: Request, res: Response, next: NextFunction) {
+  try {
+    const availableDateParams = Object.fromEntries(new URLSearchParams(req.params.availableDateParams))
+
+    if (!availableDateParams.userId || !availableDateParams.availableDateId) {
+      throw new MissingRequiredParams()
+    }
+    
+    const userId = availableDateParams.userId;
+    const availableDateId = availableDateParams.availableDateId;
+    const result = await userService.deleteAvailableDate(userId, availableDateId)
 
     res.json({result})
   } catch (err) {

@@ -58,12 +58,12 @@ db.once('open', async function() {
         },
         {
           weekday: 1,
-          initialTime: '9:00',
+          initialTime: '09:00',
           finalTime: '10:00'
         },
         {
           weekday: 2,
-          initialTime: '9:00',
+          initialTime: '09:00',
           finalTime: '19:00'
         },
         {
@@ -84,12 +84,12 @@ db.once('open', async function() {
         },
         {
           weekday: 2,
-          initialTime: '9:00',
+          initialTime: '09:00',
           finalTime: '10:00'
         },
         {
           weekday: 3,
-          initialTime: '9:00',
+          initialTime: '09:00',
           finalTime: '19:00'
         },
         {

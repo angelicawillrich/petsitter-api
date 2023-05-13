@@ -24,7 +24,9 @@ router.patch('/user/createPost', sessionChecker, userController.createPost)
 router.patch('/user/deletePost', sessionChecker, userController.deletePost)
 
 router.patch('/user/petSitter', sessionChecker, userController.updatePetSitter)
-router.patch('/user/petSitter/availableDates', sessionChecker, userController.updatePetSitterAvailableDates)
+router.post('/user/petSitter/availableDate', sessionChecker, userController.createAvailableDate)
+router.patch('/user/petSitter/availableDate', sessionChecker, userController.updateAvailableDate)
+router.delete('/user/petSitter/availableDates/availableDateParams:availableDateParams', sessionChecker, userController.deleteAvailableDate)
 
 router.post('/booking', sessionChecker, bookingController.createBooking)
 router.patch('/booking', sessionChecker, bookingController.updateBookingStatus)

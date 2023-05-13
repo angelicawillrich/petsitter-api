@@ -161,3 +161,28 @@ export async function filterPetSitters (filter) {
 
     return result
 }
+
+export async function createAvailableDate(userId: string, availableDate: any) {
+    const result =  await UserModel.findOneAndUpdate(
+        { _id: userId }, 
+        { $push: { availableDates: availableDate } },
+      );
+   return result
+}
+
+export async function updateAvailableDate(userId: string, availableDateId: string, availableDate: any) {
+    const result =  await UserModel.updateOne(
+        { _id: userId, 'availableDates._id': availableDateId },
+        { $set: { availableDates: availableDate } },
+   )
+   return result
+}
+
+export async function deleteAvailableDates(userId: string, availableDateId: any) {
+    const result = await UserModel.updateOne({ _id: userId }, {
+        $pull: {
+            'availableDates': {_id: availableDateId},
+        },
+    });
+    return result
+}
