@@ -57,7 +57,7 @@ export async function getUserById(userId: string) {
     return result
   }
 
-  export async function deletePhotoAlbum(userId: string, album: any) {
+  export async function deletePhotoAlbum(userId: string, album: string) {
     const result = await UserRepo.deletePhotoAlbum(userId, album);
     return result
   }
@@ -67,8 +67,8 @@ export async function getUserById(userId: string) {
     return result
   }
 
-  export async function deletePost(userId: string, post: any) {
-    const result = await UserRepo.updateUser(userId, post);
+  export async function deletePost(userId: string, postId: string) {
+    const result = await UserRepo.deletePost(userId, postId);
     return result
   }
 

@@ -21,7 +21,7 @@ router.patch('/user/pets', sessionChecker, userController.updatePets)
 router.patch('/user/addPhotoAlbum', sessionChecker, userController.addPhotoAlbum)
 router.delete('/user/deletePhotoAlbum/deleteDataParams:deleteDataParams', sessionChecker, userController.deletePhotoAlbum)
 router.patch('/user/createPost', sessionChecker, userController.createPost)
-router.patch('/user/deletePost', sessionChecker, userController.deletePost)
+router.delete('/user/deletePost/deleteDataParams:deleteDataParams', sessionChecker, userController.deletePost)
 
 router.patch('/user/petSitter', sessionChecker, userController.updatePetSitter)
 router.post('/user/petSitter/availableDate', sessionChecker, userController.createAvailableDate)

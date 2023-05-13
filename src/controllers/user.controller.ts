@@ -282,17 +282,15 @@ export async function createPost (req: Request, res: Response, next: NextFunctio
 
 export async function deletePost (req: Request, res: Response, next: NextFunction) {
   try {
-    if (!req.body.petSitterId || !req.body.posts) {
+    const deleteDataParams = Object.fromEntries(new URLSearchParams(req.params.deleteDataParams))
+    if (!deleteDataParams.userId || !deleteDataParams.postId) {
       throw new MissingRequiredParams()
     }
 
-    const petSitterId = req.body.petSitterId
-    
-    const update = {
-      posts: req.body.posts
-    }
+    const userId = deleteDataParams.userId
+    const postId = deleteDataParams.postId
 
-    const result = await userService.deletePost(petSitterId, update)
+    const result = await userService.deletePost(userId, postId)
 
     res.json({result})
 

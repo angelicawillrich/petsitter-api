@@ -142,7 +142,7 @@ export async function addPhotoAlbum(userId: string, addData: any) {
       );
 }
 
-export async function deletePhotoAlbum(userId: string, photoId: any) {
+export async function deletePhotoAlbum(userId: string, photoId: string) {
     await UserModel.updateOne({ _id: userId }, {
         $pull: {
             'album': {_id: photoId},
@@ -155,6 +155,14 @@ export async function createPost(userId: string, addData: any) {
         { _id: userId }, 
         { $push: { posts: addData } },
       );
+}
+
+export async function deletePost(userId: string, postId: string) {
+    await UserModel.updateOne({ _id: userId }, {
+        $pull: {
+            'posts': {_id: postId},
+        },
+    });
 }
 
 export async function filterPetSitters (filter) {
