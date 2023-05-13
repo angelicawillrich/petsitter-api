@@ -19,7 +19,7 @@ router.post('/user', userController.createUser)
 router.patch('/user/profile', sessionChecker, userController.updateProfile)
 router.patch('/user/pets', sessionChecker, userController.updatePets)
 router.patch('/user/addPhotoAlbum', sessionChecker, userController.addPhotoAlbum)
-router.patch('/user/deletePhotoAlbum', sessionChecker, userController.deletePhotoAlbum)
+router.delete('/user/deletePhotoAlbum/deleteDataParams:deleteDataParams', sessionChecker, userController.deletePhotoAlbum)
 router.patch('/user/createPost', sessionChecker, userController.createPost)
 router.patch('/user/deletePost', sessionChecker, userController.deletePost)
 

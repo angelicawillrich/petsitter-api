@@ -142,6 +142,14 @@ export async function addPhotoAlbum(userId: string, addData: any) {
       );
 }
 
+export async function deletePhotoAlbum(userId: string, photoId: any) {
+    await UserModel.updateOne({ _id: userId }, {
+        $pull: {
+            'album': {_id: photoId},
+        },
+    });
+}
+
 export async function createPost(userId: string, addData: any) {
     await UserModel.findOneAndUpdate(
         { _id: userId }, 

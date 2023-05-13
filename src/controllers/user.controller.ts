@@ -235,17 +235,15 @@ export async function addPhotoAlbum (req: Request, res: Response, next: NextFunc
 
 export async function deletePhotoAlbum (req: Request, res: Response, next: NextFunction) {
   try {
-    if (!req.body.userId || !req.body.album) {
+    const deleteDataParams = Object.fromEntries(new URLSearchParams(req.params.deleteDataParams))
+    if (!deleteDataParams.userId || !deleteDataParams.photoId) {
       throw new MissingRequiredParams()
     }
 
-    const userId = req.body.userId
-    
-    const update = {
-      album: req.body.album
-    }
+    const userId = deleteDataParams.userId
+    const photoId = deleteDataParams.photoId
 
-    const result = await userService.deletePhotoAlbum(userId, update)
+    const result = await userService.deletePhotoAlbum(userId, photoId)
 
     res.json({result})
 
