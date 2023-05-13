@@ -189,7 +189,8 @@ export async function createAvailableDate(userId: string, availableDate: any) {
 export async function updateAvailableDate(userId: string, availableDateId: string, availableDate: any) {
     const result =  await UserModel.updateOne(
         { _id: userId, 'availableDates._id': availableDateId },
-        { $set: { availableDates: availableDate } },
+        { $set: { 'availableDates.$[element]': availableDate } },
+        { arrayFilters: [ { "element._id":availableDateId } ] }
    )
    return result
 }
