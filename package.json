@@ -6,7 +6,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "tsx dist/src/index.js",
-    "start:dev": "tsx watch src/index.ts",
+    "start:dev": "tsx watch dist/src/index.js src/index.ts",
     "migration": "tsc && tsx dist/migrations/index.js",
     "test": "jest --coverage ./src"
   },
