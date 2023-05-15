@@ -7,6 +7,7 @@ export interface IRating extends Document {
   description: string;
   reviewedByPetSitter: boolean;
   createdAt: Date;
+  updatedAt: Date;
 }
 
 export const RatingSchema = new mongoose.Schema<IRating>({
@@ -23,5 +24,6 @@ export const RatingSchema = new mongoose.Schema<IRating>({
     rating: {type: Number, required: true},
     description: {type: String, required: true},
     reviewedByPetSitter: {type: Boolean, required: true},
-    createdAt: {type: Date}
+    createdAt: {type: Date},
+    updatedAt: {type: Date}
   });

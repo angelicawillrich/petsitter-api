@@ -37,3 +37,17 @@ export async function createBooking (req: Request, res: Response, next: NextFunc
         next(err);
       }
   }
+
+  export async function filterBooking (req: Request, res: Response, next: NextFunction) {
+    console.log('req.params', req.params)
+    try {
+      const filter = Object.fromEntries(new URLSearchParams(req.params.filter))
+      console.log('#filter', filter)
+      const result = await bookingService.filterBooking(filter)
+  
+      res.json({result})
+    } catch (err) {
+      console.error('ERROR:', err)
+      next(err);
+    }
+  }

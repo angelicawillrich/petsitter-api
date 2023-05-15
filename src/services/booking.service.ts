@@ -38,3 +38,9 @@ export async function updateBookingStatus (bookingId: string, update: IBookingSt
     const updateBookingResult = await BookingRepo.updateBookingStatus(bookingId, update);
     return updateBookingResult;
 }
+
+export async function filterBooking(filter: any) {
+    const result = await BookingRepo.filterBooking(filter);
+
+    return result
+}

@@ -9,6 +9,12 @@ export interface IRating {
     reviewedByPetSitter: boolean;
 }
 
+export interface IUpdateRating {
+    rating: number
+    description: string
+    _id: string
+}
+
 export async function createRating(data: IRating) {
     try {
         const reviewedId = data.reviewedId
@@ -22,4 +28,16 @@ export async function createRating(data: IRating) {
         console.error('Error:', error)
         throw new TransactionFailed();
     }
+}
+
+export async function filterRating(filter: any) {
+    const result = await RatingRepo.filterRating(filter);
+
+    return result
+}
+
+export async function updateRating(ratingId: string, update: {description: string, rating: number, updatedAt: Date}) {
+    const result = await RatingRepo.updateRating(ratingId, update);
+
+    return result
 }

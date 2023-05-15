@@ -9,6 +9,9 @@ router.get('/user/:id', sessionChecker, userController.getUserById);
 router.get('/petsitter/:id', sessionChecker, userController.getPetSitterById);
 router.get('/petsitters', sessionChecker, userController.fetchPetSitters);
 router.get('/petsitters/filter:filter', sessionChecker, userController.filterPetSitters);
+router.get('/rating/filter:filter', sessionChecker, ratingController.filterRating);
+router.get('/booking/filter:filter', sessionChecker, bookingController.filterBooking);
+
 
 router.get('/verifyToken', sessionChecker, userController.verifyToken);
 
@@ -32,5 +35,6 @@ router.post('/booking', sessionChecker, bookingController.createBooking)
 router.patch('/booking', sessionChecker, bookingController.updateBookingStatus)
 
 router.post('/rating', sessionChecker, ratingController.createRating)
+router.patch('/rating', sessionChecker, ratingController.updateRating)
 
 export default router;

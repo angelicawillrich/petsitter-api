@@ -10,3 +10,10 @@ export async function updateBookingStatus (bookingId: string, update: IBookingSt
     const updateBookingResult = await BookingModel.findOneAndUpdate({ _id: bookingId }, update);
     return updateBookingResult;
 }
+
+export async function filterBooking (filter: any) {
+    const result = await BookingModel.find(filter)
+    .exec();
+
+    return result
+}
