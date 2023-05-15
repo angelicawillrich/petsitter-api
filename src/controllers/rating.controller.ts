@@ -16,10 +16,8 @@ export async function createRating (req: Request, res: Response, next: NextFunct
   }
 
   export async function filterRating (req: Request, res: Response, next: NextFunction) {
-    console.log('req.params', req.params)
     try {
       const filter = Object.fromEntries(new URLSearchParams(req.params.filter))
-      console.log('#filter', filter)
       const result = await ratingService.filterRating(filter)
   
       res.json({result})
