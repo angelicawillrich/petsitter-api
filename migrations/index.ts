@@ -130,15 +130,8 @@ db.once('open', async function() {
         date: new Date()
       }
     ],
-    posts: [
-      {
-        id: '1',
-        filename: 'post1.jpg',
-        description: 'My first post',
-        date: new Date()
-      }
-    ],
-    isPetSitter: true,
+    posts: [],
+    isPetSitter: false,
     availableDates: [{
       initialDate: new Date(),
       finalDate: new Date(new Date().setFullYear(new Date().getFullYear() + 1)),

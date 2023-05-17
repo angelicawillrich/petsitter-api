@@ -2,6 +2,8 @@ import { NextFunction, Request, Response } from "express";
 import { bookingService } from "../services";
 import { MissingRequiredParams } from "../middlewares/errors/MissingRequiredParams";
 import { IBookingData } from "../services/booking.service";
+import { isValidObjectId } from "mongoose";
+import { InvalidId } from "../middlewares/errors/InvalidId";
 
 export async function createBooking (req: Request, res: Response, next: NextFunction) {
     try {
@@ -28,6 +30,9 @@ export async function createBooking (req: Request, res: Response, next: NextFunc
         const update = {
             status: req.body.status,
         };
+        if (!isValidObjectId(bookingId)) {
+          throw new InvalidId()
+        }
     
         const result = await bookingService.updateBookingStatus(bookingId, update)
     

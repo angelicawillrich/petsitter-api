@@ -7,6 +7,8 @@ import { sessions } from "..";
 import { NotFoundError } from "../middlewares/errors/NotFoundError";
 import { saveBase64ImageToLocalFolder } from "../utils/utils";
 import { IPet } from "../models/users";
+import { isValidObjectId } from "mongoose";
+import { InvalidId } from "../middlewares/errors/InvalidId";
 
 const regex = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.(?:[a-zA-Z]{2}|[a-zA-Z]{3})$/
 
@@ -26,6 +28,11 @@ export async function getUserById(req: Request, res: Response, next: NextFunctio
     if (!req.params.id) {
       throw new MissingRequiredParams()
     }
+
+    if (!isValidObjectId(req.params.id)) {
+      throw new InvalidId()
+    }
+
     const userId = req.params.id
     const userResult = await userService.getUserById(userId)
     res.json({userResult})
@@ -39,6 +46,10 @@ export async function getPetSitterById (req: Request, res: Response, next: NextF
   try {
     if (!req.params.id) {
       throw new MissingRequiredParams()
+    }
+
+    if (!isValidObjectId(req.params.id)) {
+      throw new InvalidId()
     }
 
     const petSitterId = req.params.id
@@ -135,6 +146,9 @@ export async function updateProfile (req: Request, res: Response, next: NextFunc
     if (!req.body.userId || !req.body.name || !req.body.address || !req.body.cityId || !req.body.cityName || !req.body.stateId || !req.body.stateName || !req.body.phone) {
       throw new MissingRequiredParams()
     }
+    if (!isValidObjectId(req.body.userId)) {
+      throw new InvalidId()
+    }
     let url = null
     if (req.body.profilePicture) {
       if (req.body.profilePicture.split('/')[1] === "images") {
@@ -175,6 +189,9 @@ export async function updatePets (req: Request, res: Response, next: NextFunctio
   if (!req.body.userId || !req.body.pets) {
     throw new MissingRequiredParams()
   }
+  if (!isValidObjectId(req.body.userId)) {
+    throw new InvalidId()
+  }
 
   try {
     const updatedPets = await Promise.all(req.body.pets.map(async (pet: IPet): Promise<IPet> => {
@@ -212,6 +229,9 @@ export async function addPhotoAlbum (req: Request, res: Response, next: NextFunc
     if (!req.body.userId || !req.body.photo) {
       throw new MissingRequiredParams()
     }
+    if (!isValidObjectId(req.body.userId)) {
+      throw new InvalidId()
+    }
 
     const userId = req.body.userId
     const base64Image = req.body.photo
@@ -239,6 +259,9 @@ export async function deletePhotoAlbum (req: Request, res: Response, next: NextF
     if (!deleteDataParams.userId || !deleteDataParams.photoId) {
       throw new MissingRequiredParams()
     }
+    if (!isValidObjectId(deleteDataParams.userId || !isValidObjectId(deleteDataParams.photoId))) {
+      throw new InvalidId()
+    }
 
     const userId = deleteDataParams.userId
     const photoId = deleteDataParams.photoId
@@ -257,6 +280,10 @@ export async function createPost (req: Request, res: Response, next: NextFunctio
   try {
     if (!req.body.petSitterId || !req.body.filename) {
       throw new MissingRequiredParams()
+    }
+
+    if (!isValidObjectId(req.body.petSitterId)) {
+      throw new InvalidId()
     }
 
     const petSitterId = req.body.petSitterId
@@ -286,6 +313,9 @@ export async function deletePost (req: Request, res: Response, next: NextFunctio
     if (!deleteDataParams.userId || !deleteDataParams.postId) {
       throw new MissingRequiredParams()
     }
+    if (!isValidObjectId(deleteDataParams.userId) || !isValidObjectId(deleteDataParams.postId)) {
+      throw new InvalidId()
+    }
 
     const userId = deleteDataParams.userId
     const postId = deleteDataParams.postId
@@ -304,6 +334,9 @@ export async function updatePetSitter (req: Request, res: Response, next: NextFu
   try {
     if (!req.body.userId || !req.body.petSitterInfo) {
       throw new MissingRequiredParams()
+    }
+    if (!isValidObjectId(req.body.userId)) {
+      throw new InvalidId()
     }
 
     const userId = req.body.userId;
@@ -327,6 +360,9 @@ export async function createAvailableDate (req: Request, res: Response, next: Ne
     if (!req.body.userId|| !req.body.availableDate) {
       throw new MissingRequiredParams()
     }
+    if (!isValidObjectId(req.body.userId)) {
+      throw new InvalidId()
+    }
     
     const userId = req.body.userId;
     const availableDate = req.body.availableDate
@@ -345,7 +381,10 @@ export async function updateAvailableDate (req: Request, res: Response, next: Ne
     if (!req.body.userId || !req.body.availableDateId || !req.body.availableDate) {
       throw new MissingRequiredParams()
     }
-    
+    if (!isValidObjectId(req.body.userId) || !isValidObjectId(req.body.availableDateId)) {
+      throw new InvalidId()
+    }
+
     const userId = req.body.userId;
     const availableDateId = req.body.availableDateId;
     const availableDate = req.body.availableDate
@@ -365,6 +404,9 @@ export async function deleteAvailableDate (req: Request, res: Response, next: Ne
 
     if (!availableDateParams.userId || !availableDateParams.availableDateId) {
       throw new MissingRequiredParams()
+    }
+    if (!isValidObjectId(availableDateParams.userId) || !isValidObjectId(availableDateParams.availableDateId)) {
+      throw new InvalidId()
     }
     
     const userId = availableDateParams.userId;
