@@ -1,20 +1,21 @@
-import { bookingService } from ".";
-import { TransactionFailed } from "../middlewares/errors/TransactionFailed";
-import { BookingRepo } from "../repos";
+import { bookingService } from '.';
+import { TransactionFailed } from '../middlewares/errors/TransactionFailed';
+import { BookingRepo } from '../repos';
 
 jest.mock('../models')
 
 describe('booking services', () => {
-  it("should create a booking", async () => {
+  it('should create a booking', async () => {
     const data = 
       {
-        "userId": "644772ba683495eb79924be2",
-        "petSitterId": "64476cd5dade90c92340029b",
-        "initialDate": new Date(),
-        "finalDate": new Date(),
-        "initialTime": "09:00",
-        "finalTime": "09:00",
-        "status": "pending"
+        'userId': '644772ba683495eb79924be2',
+        'petSitterId': '64476cd5dade90c92340029b',
+        'initialDate': new Date(),
+        'finalDate': new Date(),
+        'initialTime': '09:00',
+        'finalTime': '09:00',
+        'status': 'pending',
+        'service': '1',
       };
     const mockResponse = {
         _id: '1',
@@ -28,16 +29,17 @@ describe('booking services', () => {
 
   });
 
-  it("should throw an error if one or more params are missing", async () => {
+  it('should throw an error if one or more params are missing', async () => {
     const data = 
       {
-        "userId": "644772ba683495eb79924be2",
-        "petSitterId": "64476cd5dade90c92340029b",
-        "initialDate": new Date(),
-        "finalDate": new Date(),
-        "initialTime": "09:00",
-        "finalTime": "09:00",
-        "status": ""
+        'userId': '644772ba683495eb79924be2',
+        'petSitterId': '64476cd5dade90c92340029b',
+        'initialDate': new Date(),
+        'finalDate': new Date(),
+        'initialTime': '09:00',
+        'finalTime': '09:00',
+        'status': '',
+        'service': ''
       };
     const mockResponse = null;
 
@@ -46,9 +48,9 @@ describe('booking services', () => {
     await expect(bookingService.createBooking(data)).rejects.toThrow(TransactionFailed);
   });
 
-  it("should update a booking status", async () => {
-    const data = { "status": "canceled" };
-    const bookingId = "1"
+  it('should update a booking status', async () => {
+    const data = { 'status': 'canceled' };
+    const bookingId = '1'
     const mockResponse = {
         _id: '1',
     };
@@ -56,6 +58,29 @@ describe('booking services', () => {
     BookingRepo.updateBookingStatus = jest.fn().mockResolvedValue(mockResponse);
 
     const result = await bookingService.updateBookingStatus(bookingId, data);
+
+    expect(result).toEqual(mockResponse);
+
+  });
+
+  it('should filter bookings', async () => {
+
+    const filter = {_id: '1'};
+    const mockResponse = {
+      '_id': '1',
+      'userId': '644772ba683495eb79924be2',
+      'petSitterId': '64476cd5dade90c92340029b',
+      'initialDate': new Date(),
+      'finalDate': new Date(),
+      'initialTime': '09:00',
+      'finalTime': '09:00',
+      'status': '',
+      'service': ''
+    };
+
+    BookingRepo.filterBooking = jest.fn().mockResolvedValue(mockResponse);
+
+    const result = await bookingService.filterBooking(filter);
 
     expect(result).toEqual(mockResponse);
 
