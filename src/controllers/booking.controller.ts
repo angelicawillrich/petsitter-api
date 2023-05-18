@@ -7,15 +7,15 @@ import { InvalidId } from "../middlewares/errors/InvalidId";
 
 export async function createBooking (req: Request, res: Response, next: NextFunction) {
     try {
-      const data: IBookingData = req.body;
-
-      if (!data.petSitterId || !data.userId || !data.initialDate || !data.initialTime || !data.finalDate || !data.finalTime || !data.service) {
+      if (!req.body.petSitterId || !req.body.userId || !req.body.initialDate || !req.body.initialTime || !req.body.finalDate || !req.body.finalTime || !req.body.service) {
         throw new MissingRequiredParams()
       }
 
-      if (!isValidObjectId(data.userId) || !isValidObjectId(data.petSitterId)) {
+      if (!isValidObjectId(req.body.userId) || !isValidObjectId(req.body.petSitterId)) {
         throw new InvalidId()
       }
+
+      const data: IBookingData = req.body;
 
       const updatedData = {...data, status: 'pending'}
 
@@ -23,7 +23,6 @@ export async function createBooking (req: Request, res: Response, next: NextFunc
   
       res.json({result})
     } catch (err) {
-      console.error('ERROR:', err)
       next(err);
     }
   }
@@ -47,7 +46,6 @@ export async function createBooking (req: Request, res: Response, next: NextFunc
   
       res.json({result})
     } catch (err) {
-      console.error('ERROR:', err)
       next(err);
     }
   }
@@ -63,7 +61,6 @@ export async function createBooking (req: Request, res: Response, next: NextFunc
   
       res.json({result})
     } catch (err) {
-      console.error('ERROR:', err)
       next(err);
     }
   }
