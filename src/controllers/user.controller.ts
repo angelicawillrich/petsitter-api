@@ -1,16 +1,15 @@
 import { NextFunction, Request, Response } from "express";
-import { userService } from "../services";
+import { isValidObjectId } from "mongoose";
+import { v4 as uuidv4 } from 'uuid';
 import { MissingRequiredParams } from "../middlewares/errors/MissingRequiredParams";
 import { InvalidEmail } from "../middlewares/errors/InvalidEmail";
-import { v4 as uuidv4 } from 'uuid';
-import { sessions } from "..";
 import { NotFoundError } from "../middlewares/errors/NotFoundError";
-import { saveBase64ImageToLocalFolder } from "../utils/utils";
+import { regex, saveBase64ImageToLocalFolder } from "../utils/utils";
 import { IPet } from "../models/users";
-import { isValidObjectId } from "mongoose";
 import { InvalidId } from "../middlewares/errors/InvalidId";
+import { sessions } from "../sessions";
+import { userService } from "../services";
 
-const regex = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.(?:[a-zA-Z]{2}|[a-zA-Z]{3})$/
 
 export async function verifyToken(req: Request, res: Response, next: NextFunction) {
   try {
@@ -37,7 +36,6 @@ export async function getUserById(req: Request, res: Response, next: NextFunctio
     const userResult = await userService.getUserById(userId)
     res.json({userResult})
   } catch (err) {
-    console.error('ERROR:', err)
     next(err);
   }
 }
@@ -57,7 +55,6 @@ export async function getPetSitterById (req: Request, res: Response, next: NextF
     const result = await userService.getPetSitterById(petSitterId)
     res.json({result})
   } catch (err) {
-    console.error('ERROR:', err)
     next(err);
   }
 }
@@ -82,7 +79,6 @@ export async function login (req: Request, res: Response, next: NextFunction) {
       res.json(result)
     }
   } catch (err) {
-    console.error('ERROR:', err)
     next(err);
   }
 }
@@ -101,7 +97,6 @@ export async function logout (req: Request, res: Response, next: NextFunction) {
     res.json(true)
 
   } catch (err) {
-    console.error('ERROR:', err)
     next(err);
   }
 }
@@ -112,7 +107,6 @@ export async function fetchPetSitters (req: Request, res: Response, next: NextFu
 
     res.json({result})
   } catch (err) {
-    console.error('ERROR:', err)
     next(err);
   }
 }
@@ -136,7 +130,6 @@ export async function createUser (req: Request, res: Response, next: NextFunctio
 
     res.json({result})
   } catch (err) {
-    console.error('ERROR:', err)
     next(err);
   }
 }
@@ -180,7 +173,6 @@ export async function updateProfile (req: Request, res: Response, next: NextFunc
 
     res.json({result})
   } catch (err) {
-    console.error('ERROR:', err)
     next(err);
   }
 }
@@ -219,7 +211,6 @@ export async function updatePets (req: Request, res: Response, next: NextFunctio
 
     res.json({result})
   } catch (err) {
-    console.error('ERROR:', err)
     next(err);
   }
 }
@@ -248,7 +239,6 @@ export async function addPhotoAlbum (req: Request, res: Response, next: NextFunc
     res.json({result})
 
   } catch (err) {
-    console.error('ERROR:', err)
     next(err);
   }
 }
@@ -271,7 +261,6 @@ export async function deletePhotoAlbum (req: Request, res: Response, next: NextF
     res.json({result})
 
   } catch (err) {
-    console.error('ERROR:', err)
     next(err);
   }
 }
@@ -302,7 +291,6 @@ export async function createPost (req: Request, res: Response, next: NextFunctio
     res.json({result})
 
   } catch (err) {
-    console.error('ERROR:', err)
     next(err);
   }
 }
@@ -325,7 +313,6 @@ export async function deletePost (req: Request, res: Response, next: NextFunctio
     res.json({result})
 
   } catch (err) {
-    console.error('ERROR:', err)
     next(err);
   }
 }
@@ -350,7 +337,6 @@ export async function updatePetSitter (req: Request, res: Response, next: NextFu
 
     res.json({result})
   } catch (err) {
-    console.error('ERROR:', err)
     next(err);
   }
 }
@@ -371,7 +357,6 @@ export async function createAvailableDate (req: Request, res: Response, next: Ne
 
     res.json({result})
   } catch (err) {
-    console.error('ERROR:', err)
     next(err);
   }
 }
@@ -393,7 +378,6 @@ export async function updateAvailableDate (req: Request, res: Response, next: Ne
 
     res.json({result})
   } catch (err) {
-    console.error('ERROR:', err)
     next(err);
   }
 }
@@ -415,7 +399,6 @@ export async function deleteAvailableDate (req: Request, res: Response, next: Ne
 
     res.json({result})
   } catch (err) {
-    console.error('ERROR:', err)
     next(err);
   }
 }
@@ -427,7 +410,6 @@ export async function filterPetSitters (req: Request, res: Response, next: NextF
 
     res.json({result})
   } catch (err) {
-    console.error('ERROR:', err)
     next(err);
   }
 }

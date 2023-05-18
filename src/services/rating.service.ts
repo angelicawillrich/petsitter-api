@@ -25,7 +25,6 @@ export async function createRating(data: IRating) {
 
         return createRatingResult;
     } catch (error) {
-        console.error('Error:', error)
         throw new TransactionFailed();
     }
 }

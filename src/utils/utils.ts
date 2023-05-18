@@ -31,3 +31,6 @@ export async function saveBase64ImageToLocalFolder(base64Image: string, filename
     throw new InvalidImage()
   }
 }
+
+
+export const regex = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.(?:[a-zA-Z]{2}|[a-zA-Z]{3})$/

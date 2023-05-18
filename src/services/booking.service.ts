@@ -29,7 +29,6 @@ export async function createBooking (data: IBookingData) {
 
         return createBookingResult;
     } catch (error) {
-        console.error('Error:', error)
         throw new TransactionFailed();
     }
 }

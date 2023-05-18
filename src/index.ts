@@ -10,13 +10,6 @@ import errorHandler from './middlewares/errors/error.middleware';
 const app = express();
 connectDB();
 
-interface SessionData {
-  user: string,
-  expiresAt: number
-}
-
-export const sessions: {[token: string]: SessionData} = {};
-
 dotenv.config(); // config env vars
 
 // Express config.
