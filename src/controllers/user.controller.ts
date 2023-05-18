@@ -7,14 +7,15 @@ import { NotFoundError } from "../middlewares/errors/NotFoundError";
 import { regex, saveBase64ImageToLocalFolder } from "../utils/utils";
 import { IPet } from "../models/users";
 import { InvalidId } from "../middlewares/errors/InvalidId";
-import { sessions } from "../sessions";
 import { userService } from "../services";
+import { Sessions } from "../Sessions";
 
 
 export async function verifyToken(req: Request, res: Response, next: NextFunction) {
   try {
     const sessionId = req.headers.authorization?.replace('Bearer ', '');
-    const userId = sessions[sessionId].user
+    const session = Sessions.getInstance().getSessionById(sessionId)
+    const userId = session.user
     const user = await userService.getUserById(userId)
     res.json({user})
   } catch (err) {
@@ -70,9 +71,8 @@ export async function login (req: Request, res: Response, next: NextFunction) {
     const loginResult = await userService.login(email, password)
 
     if (loginResult) {
-      const sessionId = uuidv4();
       const expiresAt = Date.now() + (24 * 60 * 60 * 1000)
-      sessions[sessionId] = { user: String(loginResult[0]._id), expiresAt};
+      const sessionId = Sessions.getInstance().addSession({ user: String(loginResult[0]._id), expiresAt})
 
       res.set("Authorization", `Bearer ${sessionId}`);
       const result = {user: loginResult, token: sessionId}
@@ -89,11 +89,11 @@ export async function logout (req: Request, res: Response, next: NextFunction) {
       throw new MissingRequiredParams();
     }
     const sessionId = req.headers.authorization?.replace('Bearer ', '');
-    if (!sessions[sessionId]) {
+    const session = Sessions.getInstance().getSessionById(sessionId)
+    if (!session) {
       throw new NotFoundError();
     }
-
-    delete sessions[sessionId];
+    Sessions.getInstance().deleteSessionById(sessionId)
     res.json(true)
 
   } catch (err) {
