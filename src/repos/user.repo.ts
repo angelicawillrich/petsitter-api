@@ -7,12 +7,6 @@ export async function getUserById (userId: string) {
         path: 'bookings',
         options: { sort: ({initialDate: 'asc'})},
         match: {
-            status: {
-                $in: [
-                  "pending",
-                  "approved"
-                ]
-              },
             finalDate: {
                 $gt: new Date()
             }
@@ -53,7 +47,8 @@ export async function getPetSitterById (petSitterId: string) {
             status: {
                 $in: [
                   "pending",
-                  "approved"
+                  "approved",
+                  "canceled"
                 ]
             },
             finalDate: {
