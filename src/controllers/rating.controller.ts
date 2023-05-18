@@ -6,6 +6,14 @@ import { InvalidId } from "../middlewares/errors/InvalidId";
 
 export async function createRating (req: Request, res: Response, next: NextFunction) {
     try {
+      if (!req.body.description || !req.body.rating || req.body.reviewedByPetSitter === undefined || !req.body.reviewedId || !req.body.reviewerId || !req.body.createdAt) {
+        throw new MissingRequiredParams()
+      }
+
+      if (!isValidObjectId(req.body.reviewedId) || !isValidObjectId(req.body.reviewerId)) {
+        throw new InvalidId()
+      }
+
       const data = req.body;
   
       const result = await ratingService.createRating(data)
@@ -19,6 +27,10 @@ export async function createRating (req: Request, res: Response, next: NextFunct
 
   export async function filterRating (req: Request, res: Response, next: NextFunction) {
     try {
+      if (!req.body.filter) {
+        throw new MissingRequiredParams()
+      }
+
       const filter = Object.fromEntries(new URLSearchParams(req.params.filter))
       const result = await ratingService.filterRating(filter)
   
