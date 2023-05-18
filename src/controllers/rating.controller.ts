@@ -20,7 +20,6 @@ export async function createRating (req: Request, res: Response, next: NextFunct
   
       res.json({result})
     } catch (err) {
-      console.error('ERROR:', err)
       next(err);
     }
   }
@@ -36,7 +35,6 @@ export async function createRating (req: Request, res: Response, next: NextFunct
   
       res.json({result})
     } catch (err) {
-      console.error('ERROR:', err)
       next(err);
     }
   }
@@ -61,7 +59,6 @@ export async function createRating (req: Request, res: Response, next: NextFunct
   
       res.json({result})
     } catch (err) {
-      console.error('ERROR:', err)
       next(err);
     }
   }

@@ -8,7 +8,7 @@
     "start": "tsc && tsx dist/src/index.js",
     "start:dev": "tsx watch src/index.ts",
     "migration": "tsc && tsx dist/migrations/index.js",
-    "test": "jest --coverage --no-cache ./src",
+    "test": "jest --no-cache ./src",
     "nuke": "rm -rf node_modules && rm -rf dist && rm -rf package-lock.json && npm i"
   },
   "author": "",
