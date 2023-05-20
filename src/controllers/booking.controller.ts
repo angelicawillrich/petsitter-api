@@ -52,7 +52,7 @@ export async function createBooking (req: Request, res: Response, next: NextFunc
 
   export async function filterBooking (req: Request, res: Response, next: NextFunction) {
     try {
-      if (!req.body.filter) {
+      if (!req.params.filter) {
         throw new MissingRequiredParams()
       }
       

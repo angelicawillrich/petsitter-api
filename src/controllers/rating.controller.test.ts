@@ -54,7 +54,7 @@ describe('rating controller', () => {
 
     it("should throw an error when filtering a booking and filter is missing", async () => {
         mockRequest = {
-            body: {
+            params: {
                 filter: null,
             },
         };

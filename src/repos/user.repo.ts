@@ -1,14 +1,16 @@
 import { UserModel } from "../models";
 
-export async function getUserById (userId: string) {
+export async function getUserById(userId: string) {
+    const now = new Date
     const user = await UserModel.findById(userId)
     .select('-password')
     .populate({
         path: 'bookings',
         options: { sort: ({initialDate: 'asc'})},
         match: {
+            userId: {$eq: userId},
             finalDate: {
-                $gt: new Date()
+                $gte: new Date(now.getFullYear(), now.getMonth(), now.getDate())
             }
         },
         populate: {
@@ -33,6 +35,7 @@ export async function findUser (email: string) {
 }
 
 export async function getPetSitterById (petSitterId: string) {
+    const now = new Date()
     const petSitter = await UserModel.find({_id: petSitterId, isPetSitter: true })
     .select('name email phone address district cityName stateName country profilePicture posts isPetSitter availableDates petSitterInfo')
     .populate({
@@ -52,7 +55,7 @@ export async function getPetSitterById (petSitterId: string) {
                 ]
             },
             finalDate: {
-                $gt: new Date()
+                $gte: new Date(now.getFullYear(), now.getMonth(), now.getDate())
             }
         },
     })
@@ -161,7 +164,7 @@ export async function deletePost(userId: string, postId: string) {
 }
 
 export async function filterPetSitters (filter) {
-    const result = await UserModel.find(filter)
+    const result = await UserModel.find({...filter, isPetSitter: true})
     .select('name cityName stateName profilePicture district petSitterInfo ratingsReceived')
     .populate({
         path: 'ratingsReceived',

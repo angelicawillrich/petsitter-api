@@ -25,7 +25,7 @@ interface IAvailableDates {
 }
 
 export interface IPet {
-  id: string;
+  id?: string;
   name: string;
   yearBirth: string;
   specie: string;
@@ -42,7 +42,7 @@ interface IAlbum {
 }
 
 interface IPost {
-  id: string;
+  id?: string;
   filename: string;
   description: string;
   date: Date;

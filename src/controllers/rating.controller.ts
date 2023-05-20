@@ -26,7 +26,7 @@ export async function createRating (req: Request, res: Response, next: NextFunct
 
   export async function filterRating (req: Request, res: Response, next: NextFunction) {
     try {
-      if (!req.body.filter) {
+      if (!req.params.filter) {
         throw new MissingRequiredParams()
       }
 
