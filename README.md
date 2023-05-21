@@ -32,6 +32,11 @@ docker-compose up -d
 npm run migration
 ```
 
+Usuários criados:
+- PetSitter: email: 'johndoe@email.com', password: 'password'
+- PetSitter: email: 'maria@email.com', password: 'password'
+- Usuário: email: 'anabanana@email.com', password: 'password'
+
 4. Executar o projeto
 ```bash
 npm run start:dev
