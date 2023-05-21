@@ -22,7 +22,7 @@ Para o banco de dados NoSQL foi utilizado o MongoDB. Para fins de desenvolviment
 npm i
 ```
 
-2. Executar container do Docker **no diretório raiz do projeto**:
+2. Executar container do Docker **no diretório raiz do projeto** (mas, antes, certifique-se que o serviço docker esteja rodando no seu computador):
 ```bash
 docker-compose up -d
 ```
