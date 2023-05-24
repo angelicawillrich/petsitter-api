@@ -405,7 +405,6 @@ export async function deleteAvailableDate (req: Request, res: Response, next: Ne
 
 export async function filterPetSitters (req: Request, res: Response, next: NextFunction) {
   try {
-    console.log('req.params.filter', req.params.filter)
     const filter = Object.fromEntries(new URLSearchParams(req.params.filter))
     const result = await userService.filterPetSitters(filter)
 
