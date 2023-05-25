@@ -143,9 +143,9 @@ db.once('open', async function() {
   copyMigrationImages(String(user1._id), 'posts', 'dog1_3.jpg')
 
   const user2 = new UserModel({
-    email: 'anabanana@email.com',
+    email: 'anamaria@email.com',
     password: 'password',
-    name: 'Ana Banana',
+    name: 'Ana Maria',
     address: 'Winfriedstr. 000',
     district: 'centro',
     cityId: '1600253',
@@ -189,9 +189,9 @@ db.once('open', async function() {
     ratingsReceived: []
   });
 
-  user2.profilePicture = `/images/${user2._id}/profile/anabanana.png`
+  user2.profilePicture = `/images/${user2._id}/profile/anamaria.png`
 
-  copyMigrationImages(String(user2._id), 'profile', 'anabanana.png')
+  copyMigrationImages(String(user2._id), 'profile', 'anamaria.png')
 
   user2.pets.push(
     {
